@@ -13,10 +13,10 @@ namespace Tomato.Net
         /// </summary>
         public static TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
         private MessageService() { }
-        private static NetMQ.NetMQPoller Poller { get; } = new NetMQPoller();
         public static MessageService Instance { get; } = new MessageService();
         private List<NetMQ.Sockets.ResponseSocket> _sockList = new List<NetMQ.Sockets.ResponseSocket>();
-        public bool IsRuning { get { return Poller.IsRunning; } }
+        private List<NetMQ.NetMQPoller> _pollerList = new List<NetMQ.NetMQPoller>();
+        public bool IsRunning { get; private set; }
         /// <summary>
         /// 启动服务,开始接收消息
         /// </summary>
@@ -24,7 +24,7 @@ namespace Tomato.Net
         /// <returns></returns>
         public bool StartService(int Consumer)
         {
-            if (Poller.IsRunning)
+            if (IsRunning)
                 return false;
 
             for (int i = 0; i < Consumer; i++)
@@ -32,12 +32,18 @@ namespace Tomato.Net
                 NetMQ.Sockets.ResponseSocket response = new NetMQ.Sockets.ResponseSocket();
                 response.Connect(Broker.WorkerAddress);
                 response.ReceiveReady += Response_ReceiveReady;
-                Poller.Add(response);
+                /* 修正客户端无法异步请求的问题
+                 * 每一个REP必须使用独立的一条线程
+                 * 当REP收到请求之后,只有回复以后才能接受下一个请求
+                 * 如果所有Consumer(REP)都正在工作,则其他请求就会挂起
+                 * 所以最大同时请求数量受Consumer的影响
+                 */
+                var poller = new NetMQPoller() { response, new NetMQTimer(Timeout) };
+                poller.RunAsync();
+                _pollerList.Add(poller);
                 _sockList.Add(response);
             }
-            Poller.Add(new NetMQTimer(Timeout));
-            Poller.RunAsync();
-            return Poller.IsRunning;
+            return IsRunning = true;
         }
         /// <summary>
         /// 停止服务
@@ -45,14 +51,14 @@ namespace Tomato.Net
         /// <returns></returns>
         public bool StopService()
         {
-            if (Poller.IsRunning == false)
+            if (IsRunning == false)
                 return false;
-            foreach (var item in _sockList)
+
+            for (int i = 0; i < _sockList.Count; i++)
             {
-                Poller.Remove(item);
-                item.Dispose();
+                _sockList[i].Dispose();
+                _pollerList[i].StopAsync();
             }
-            Poller.StopAsync();
             return true;
         }
         /// <summary>

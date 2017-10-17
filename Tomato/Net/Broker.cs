@@ -34,9 +34,9 @@ namespace Tomato.Net
             dealer.Bind(WorkerAddress);
             Poller.Add(router);
             Poller.Add(dealer);
-            //此处需要传入Poller,否则Proxy.Start会以同步方式启动
             Poller.Add(new NetMQTimer(Timeout));
             Poller.RunAsync();
+            //此处需要传入Poller,否则Proxy.Start会以同步方式启动
             NetMQ.Proxy proxy = new Proxy(router, dealer, null, Poller);
             proxy.Start();
         }

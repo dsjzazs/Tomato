@@ -26,12 +26,12 @@ namespace TomatoClient
         private void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 80; i++)
             {
                 var login = new Tomato.Protocol.LoginRequest()
                 {
                     UserName = i.ToString(),
-                    PassWrod = textBox2.Text
+                    PassWrod = DateTime.Now.ToString()
                 };
                 NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login).ContinueWith(k =>
                 {

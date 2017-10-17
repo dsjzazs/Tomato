@@ -24,7 +24,7 @@ namespace Tomato
         private static void LoginRequest(Context context, LoginRequest Body)
         {     
             //收到的请求
-            System.Threading.Thread.Sleep(1);//模拟查询操作
+            System.Threading.Thread.Sleep(3000);//模拟查询操作
 
             Console.WriteLine($"Login :  UserName : {Body.UserName} PassWrod : {Body.PassWrod}");
             context.Response(new LoginResponse()
