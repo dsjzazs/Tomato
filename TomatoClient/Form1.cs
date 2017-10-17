@@ -23,31 +23,26 @@ namespace TomatoClient
         {
 
         }
-        private async  void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             for (int i = 0; i < 500; i++)
             {
-                button1.Enabled = false;
                 var login = new Tomato.Protocol.LoginRequest()
                 {
-                    UserName = textBox1.Text,
+                    UserName = i.ToString(),
                     PassWrod = textBox2.Text
                 };
-
-
-                var res = await  NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login) ;
-
-                if (res.Success)
+                NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login).ContinueWith(k =>
                 {
-                    label3.Text = ($"登陆次数 : {i}\r\n登陆成功!\r\n{res.Session.ToString()}");
-                }
-                else
-                {
-                    label3.Text = ($"登陆失败!!!!");
-                }
-                button1.Enabled = true;
+                    var res = k.Result;
+                    if (res.Success)
+                        label3.Text = ($"登陆次数 : {i}\r\n登陆成功!\r\n{res.Session.ToString()}");
+                    else
+                        label3.Text = ($"登陆失败!!!!");
+                });
             }
-        
+            button1.Enabled = true;
         }
     }
 }
