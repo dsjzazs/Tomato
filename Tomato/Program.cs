@@ -14,14 +14,14 @@ namespace Tomato
         static void Main(string[] args)
         {
             //注册委托
-            MessageHandle.Instance.RegisterHandle<LoginRequest>(LoginRequest);
+            MessageHandle.Instance.RegisterHandle<LoginRequest>(Login);
             Broker.RunAsync();
             MessageService.Instance.StartService(10);
 
             Console.ReadKey();
         }
    
-        private static void LoginRequest(Context context, LoginRequest Body)
+        private static void Login(Context context, LoginRequest Body)
         {     
             //收到的请求
             System.Threading.Thread.Sleep(3000);//模拟查询操作
