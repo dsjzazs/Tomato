@@ -21,7 +21,7 @@ namespace Tomato.Protocol
         /// 用户密码
         /// </summary>
         [ProtoBuf.ProtoMember(2)]
-        public string PassWrod { get; set; }
+        public string PassWord { get; set; }
 
         public ProtoEnum MessageType => ProtoEnum.LoginRequest;
     }

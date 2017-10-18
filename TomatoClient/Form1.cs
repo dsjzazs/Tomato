@@ -29,7 +29,7 @@ namespace TomatoClient
             var login = new Tomato.Protocol.LoginRequest()
             {
                 UserName = textBox1.Text,
-                PassWrod = textBox2.Text
+                PassWord = textBox2.Text
             };
             var res = await NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login);
             if (res.Success)

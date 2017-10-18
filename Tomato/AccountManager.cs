@@ -71,7 +71,7 @@ namespace Tomato
         private void LoginRequestHandle(Context context, LoginRequest Body)
         {
             var db = context.DbContext;
-            var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWrod);
+            var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWord);
             if (user != null)
             {
                 var session = new EF.Session()
