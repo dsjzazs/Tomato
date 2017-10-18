@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
+
 namespace Tomato.Net
 {
     public class MessageService
@@ -14,6 +15,7 @@ namespace Tomato.Net
         public static TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
         private MessageService() { }
         public static MessageService Instance { get; } = new MessageService();
+        public event EventHandler<RequestEventArgs> RequestEvent;
         private List<NetMQ.Sockets.ResponseSocket> _sockList = new List<NetMQ.Sockets.ResponseSocket>();
         private List<NetMQ.NetMQPoller> _pollerList = new List<NetMQ.NetMQPoller>();
         public bool IsRunning { get; private set; }
@@ -61,6 +63,30 @@ namespace Tomato.Net
             }
             return true;
         }
+        private void ReceiveMessage(Header header, byte[] BodyBytes, NetMQSocket Socket)
+        {
+            using (var dbContext = new Tomato.EF.Model())
+            {
+                EF.Session session = null;
+                if (header.Session != null)
+                    session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime<=DateTime.Now );
+                if (session != null)
+                    session.ExpirationTime = DateTime.Now.AddHours(1);
+
+                var context = Context.Create(session?.User, header, dbContext, Socket);
+                var eventArgs = new RequestEventArgs() { Context = context };
+                RequestEvent?.Invoke(this, eventArgs);
+                if (eventArgs.Cancel == true)
+                    return;
+                //交给注册的委托
+                var handle = MessageHandle.Instance.GetHandle(context.Header.MessageType);
+                if (handle != null)
+                    handle.Invoke(context, BodyBytes);//全程务必保持由当前线程同步执行
+                else
+                    Console.WriteLine($"未注册的委托 : {context.Header.MessageType}");
+                dbContext.SaveChanges();
+            }
+        }
         /// <summary>
         /// 消息接收事件
         /// </summary>
@@ -78,14 +104,14 @@ namespace Tomato.Net
                 using (var ms = new System.IO.MemoryStream(HeaderBytes))
                     header = ProtoBuf.Serializer.Deserialize<Header>(ms);
                 header.MessageType = messageType;
-                var context = Context.Create(User.Create(), header, e.Socket);
-                //交给注册的委托
-                var handle = MessageHandle.Instance.GetHandle(context.Header.MessageType);
-                if (handle != null)
-                    handle.Invoke(context, BodyBytes);//全程务必保持由当前线程同步执行
-                else
-                    Console.WriteLine($"未注册的委托 : {context.Header.MessageType}");
+                this.ReceiveMessage(header, BodyBytes, e.Socket);
             }
         }
+    }
+
+    public class RequestEventArgs : EventArgs
+    {
+        public bool Cancel { get; set; }
+        public Context Context { get; set; }
     }
 }

@@ -31,23 +31,4 @@ namespace Tomato.Protocol
         public string Message { get; set; }
         public ProtoEnum MessageType => ProtoEnum.LoginResponse;
     }
-    /// <summary>
-    /// 登陆请求
-    /// </summary>
-    [ProtoBuf.ProtoContract]
-    public class LoginRequest : IProtocol
-    {
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        [ProtoBuf.ProtoMember(1)]
-        public string UserName { get; set; }
-        /// <summary>
-        /// 用户密码
-        /// </summary>
-        [ProtoBuf.ProtoMember(2)]
-        public string PassWrod { get; set; }
-
-        public ProtoEnum MessageType => ProtoEnum.LoginRequest;
-    }
 }

@@ -35,6 +35,12 @@
     <Reference Include="AsyncIO, Version=0.1.25.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncIO.0.1.26.0\lib\net40\AsyncIO.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="NetMQ, Version=4.0.0.1, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
       <HintPath>..\packages\NetMQ.4.0.0.1\lib\net40\NetMQ.dll</HintPath>
     </Reference>
@@ -57,8 +63,11 @@
       <HintPath>..\packages\ServiceStack.Text.4.5.14\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,9 +80,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountManager.cs" />
+    <Compile Include="EF\Model.cs" />
+    <Compile Include="EF\Session.cs" />
     <Compile Include="Net\Broker.cs" />
+    <Compile Include="Net\Context.cs" />
+    <Compile Include="Net\Expand.cs" />
     <Compile Include="Net\MessageHandle.cs" />
     <Compile Include="Net\MessageService.cs" />
+    <Compile Include="EF\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -86,8 +101,5 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="TextFile1.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

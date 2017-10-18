@@ -33,6 +33,12 @@
     <Reference Include="AsyncIO, Version=0.1.25.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncIO.0.1.26.0\lib\net40\AsyncIO.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="NetMQ, Version=4.0.0.1, Culture=neutral, PublicKeyToken=a6decef4ddc58b3a, processorArchitecture=MSIL">
       <HintPath>..\packages\NetMQ.4.0.0.1\lib\net40\NetMQ.dll</HintPath>
     </Reference>
@@ -55,6 +61,7 @@
       <HintPath>..\packages\ServiceStack.Text.4.5.14\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -65,16 +72,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Net\Context.cs" />
-    <Compile Include="Net\Expand.cs" />
+    <Compile Include="GenderEnum.cs" />
     <Compile Include="Net\Header.cs" />
     <Compile Include="Net\IProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\ProtoEnum.cs" />
+    <Compile Include="Protocol\LoginRequest.cs" />
+    <Compile Include="ProtoEnum.cs" />
     <Compile Include="Protocol\LoginResponse.cs" />
     <Compile Include="Net\User.cs" />
+    <Compile Include="Protocol\RegisterRequest.cs" />
+    <Compile Include="Protocol\RegisterResponse.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

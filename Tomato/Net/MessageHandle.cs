@@ -10,9 +10,9 @@ namespace Tomato.Net
     {
         void Invoke(Context context, byte[] bodyBytes);
     }
-    public class NetworkHandleBase<T> : INetworkHandle where T : IProtocol
+    internal class NetworkHandleBase<T> : INetworkHandle where T : IProtocol, new()
     {
-        private HandlerDelegate<T> Handle;
+        internal HandlerDelegate<T> Handle { get; set; }
         public NetworkHandleBase(HandlerDelegate<T> fun)
         {
             Handle = fun;
@@ -25,7 +25,7 @@ namespace Tomato.Net
             Handle.Invoke(context, (T)body);
         }
     }
-    public delegate void HandlerDelegate<T>(Context context, T body);
+    public delegate void HandlerDelegate<T>(Context context, T body) where T : IProtocol, new();
     public class MessageHandle
     {
         private MessageHandle() { }
@@ -48,6 +48,11 @@ namespace Tomato.Net
         {
             return DicHandles.ContainsKey(MessageType);
         }
+
+        public bool UnloadHandle<T>() where T : IProtocol, new()
+        {
+            return DicHandles.Remove(new T().MessageType);
+        }
         /// <summary>
         /// 注销委托
         /// </summary>
@@ -65,10 +70,11 @@ namespace Tomato.Net
         /// <returns></returns>
         public INetworkHandle GetHandle(Protocol.ProtoEnum messageType)
         {
-            INetworkHandle handle;
-            if (DicHandles.TryGetValue(messageType, out handle))
+            if (DicHandles.TryGetValue(messageType, out INetworkHandle handle))
                 return handle;
             return null;
         }
+
+
     }
 }

@@ -13,26 +13,13 @@ namespace Tomato
     {
         static void Main(string[] args)
         {
-            //注册委托
-            MessageHandle.Instance.RegisterHandle<LoginRequest>(Login);
+            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<EF.Model>());
             Broker.RunAsync();
             MessageService.Instance.StartService(10);
-
+            UserManager.Instance.Initialize();
             Console.ReadKey();
         }
-   
-        private static void Login(Context context, LoginRequest Body)
-        {     
-            //收到的请求
-            System.Threading.Thread.Sleep(3000);//模拟查询操作
 
-            Console.WriteLine($"Login :  UserName : {Body.UserName} PassWrod : {Body.PassWrod}");
-            context.Response(new LoginResponse()
-            {
-                Message = "登陆成功,欢迎使用",
-                Success = true,
-                Session = Guid.NewGuid()
-            });
-        }
+
     }
 }

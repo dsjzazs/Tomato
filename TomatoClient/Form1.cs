@@ -23,26 +23,36 @@ namespace TomatoClient
         {
 
         }
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            for (int i = 0; i < 80; i++)
+            var login = new Tomato.Protocol.LoginRequest()
             {
-                var login = new Tomato.Protocol.LoginRequest()
-                {
-                    UserName = i.ToString(),
-                    PassWrod = DateTime.Now.ToString()
-                };
-                NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login).ContinueWith(k =>
-                {
-                    var res = k.Result;
-                    if (res.Success)
-                        label3.Text = ($"登陆次数 : {i}\r\n登陆成功!\r\n{res.Session.ToString()}");
-                    else
-                        label3.Text = ($"登陆失败!!!!");
-                });
-            }
+                UserName = textBox1.Text,
+                PassWrod = textBox2.Text
+            };
+            var res = await NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login);
+            if (res.Success)
+                label3.Text = ($"登陆成功!\r\n{res.Session.ToString()}");
+            else
+                label3.Text = (res.Message);
             button1.Enabled = true;
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = false;
+            var reg = new Tomato.Protocol.RegisterRequest()
+            {
+                UserName = textBox1.Text,
+                Password = textBox2.Text
+            };
+            var res = await NetClient.Instance.Request<Tomato.Protocol.RegisterResponse>(reg);
+            if (res.Success)
+                label3.Text = ($"注册成功!\r\n{res.Session.ToString()}");
+            else
+                label3.Text = (res.Message);
+            button2.Enabled = true;
         }
     }
 }
