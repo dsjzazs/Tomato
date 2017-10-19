@@ -23,13 +23,13 @@ namespace Tomato.Net
         public EF.IUser User { get; private set; }
         private NetMQ.NetMQSocket Socket;
         private bool _answer;
-        public bool Response<T>(Context context, T body) where T : IProtocol
+        public bool Response<T>(T body) where T : IProtocol
         {
             var header = new Header
             {
-                GUID = context.Header.GUID,
+                GUID = Header.GUID,
                 IsResponse = true,
-                Session = context.Header.Session,
+                Session = Header.Session,
                 MessageType = body.MessageType,
             };
             return this.Response(header, body);
