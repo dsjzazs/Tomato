@@ -33,7 +33,6 @@ namespace Tomato
             {
                 user = new EF.UserInfo()
                 {
-                    GUID = Guid.NewGuid(),
                     Email = body.Email,
                     Gender = body.Gender,
                     NickName = body.NickName,
@@ -42,14 +41,15 @@ namespace Tomato
                 };
                 var session = new EF.Session()
                 {
-                    GUID = Guid.NewGuid(),
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
                     Verified = true,
                     VerifiedTime = DateTime.Now
                 };
                 db.UserDB.Add(user);
-                db.SessionDB.Add(session);
+                db.SaveChanges();
+                Console.WriteLine(user.GUID);
+
                 Console.WriteLine($"Register :  UserName : {user.UserName}  NickName : {user.NickName} PassWrod : {user.Password}");
                 context.Response(new RegisterResponse()
                 {
@@ -76,13 +76,13 @@ namespace Tomato
             {
                 var session = new EF.Session()
                 {
-                    GUID = Guid.NewGuid(),
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
                     Verified = true,
                     VerifiedTime = DateTime.Now
                 };
                 db.SessionDB.Add(session);
+                db.SaveChanges();
                 context.Response(new LoginResponse()
                 {
                     Message = "登陆成功!",

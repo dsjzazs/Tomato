@@ -4,6 +4,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tomato.EF
 {
@@ -19,6 +20,7 @@ namespace Tomato.EF
     public class UserInfo : IUser
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
         [DisplayName("用户名")]
         public string UserName { get; set; }

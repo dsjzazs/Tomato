@@ -4,13 +4,14 @@ using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tomato.EF
 {
     public class Session
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
         /// <summary>
         /// 验证登录
