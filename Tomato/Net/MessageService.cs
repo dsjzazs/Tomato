@@ -73,7 +73,7 @@ namespace Tomato.Net
                 if (session != null)
                     session.ExpirationTime = DateTime.Now.AddHours(1);
 
-                var context = Context.Create(session?.User, header, dbContext, Socket);
+                var context = Context.CreateContext(session?.User, header, dbContext, Socket);
                 var eventArgs = new RequestEventArgs() { Context = context };
                 RequestEvent?.Invoke(this, eventArgs);
                 if (eventArgs.Cancel == true)
