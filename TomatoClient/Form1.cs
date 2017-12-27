@@ -21,7 +21,8 @@ namespace TomatoClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Console.WindowHeight = 10;
+            Console.WindowWidth = 60;
         }
         private async void button1_Click(object sender, EventArgs e)
         {
