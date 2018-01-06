@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tomato.EF
+namespace Tomato.Model
 {
     public class Session
     {

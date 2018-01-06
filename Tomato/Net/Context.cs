@@ -8,7 +8,7 @@ namespace Tomato.Net
 {
     public class Context
     {
-        internal static Context CreateContext(EF.IUser user, Header header, EF.Model dbContext, NetMQ.NetMQSocket socket)
+        internal static Context CreateContext(Model.IUser user, Header header, Model.Model dbContext, NetMQ.NetMQSocket socket)
         {
             return new Context()
             {
@@ -18,9 +18,9 @@ namespace Tomato.Net
                 DbContext = dbContext
             };
         }
-        public EF.Model DbContext { get; private set; }
+        public Model.Model DbContext { get; private set; }
         public Header Header { get; private set; }
-        public EF.IUser User { get; private set; }
+        public Model.IUser User { get; private set; }
         private NetMQ.NetMQSocket Socket;
         private bool _answer;
         public bool Response<T>(T body) where T : IProtocol

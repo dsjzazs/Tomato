@@ -48,7 +48,7 @@ namespace Tomato.Net
             return IsRunning = true;
         }
         /// <summary>
-        /// 停止服务
+        /// 停止消息接收服务
         /// </summary>
         /// <returns></returns>
         public bool StopService()
@@ -65,13 +65,13 @@ namespace Tomato.Net
         }
         private void ReceiveMessage(Header header, byte[] BodyBytes, NetMQSocket Socket)
         {
-            using (var dbContext = new Tomato.EF.Model())
+            using (var dbContext = new Tomato.Model.Model())
             {
-                EF.Session session = null;
+                Model.Session session = null;
                 if (header.Session != null)
-                    session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime<=DateTime.Now );
+                    session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime <= DateTime.Now);
                 if (session != null)
-                    session.ExpirationTime = DateTime.Now.AddHours(1);
+                    session.ExpirationTime = DateTime.Now.AddHours(1);//刷新session有效期
 
                 var context = Context.CreateContext(session?.User, header, dbContext, Socket);
                 var eventArgs = new RequestEventArgs() { Context = context };
