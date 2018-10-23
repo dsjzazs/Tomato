@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Net", "Tomato.Net\To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomatoClient", "TomatoClient\TomatoClient.csproj", "{7C301841-1B17-4203-85BC-1D6ED4FE91C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteService", "RouteService\RouteService.csproj", "{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Service", "Tomato.Service\Tomato.Service.csproj", "{3C4BCF7F-7A53-462C-B80F-FF4A04416491}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{7C301841-1B17-4203-85BC-1D6ED4FE91C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C301841-1B17-4203-85BC-1D6ED4FE91C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C301841-1B17-4203-85BC-1D6ED4FE91C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C4BCF7F-7A53-462C-B80F-FF4A04416491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C4BCF7F-7A53-462C-B80F-FF4A04416491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C4BCF7F-7A53-462C-B80F-FF4A04416491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C4BCF7F-7A53-462C-B80F-FF4A04416491}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

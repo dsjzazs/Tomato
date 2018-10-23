@@ -92,15 +92,17 @@ namespace TomatoClient
             return Task.Factory.StartNew<R>(() =>
             {
                 var message = Serialize(header, body);
-                using (var socket = new NetMQ.Sockets.RequestSocket(@"tcp://localhost:6666"))
+                using (var socket = new NetMQ.Sockets.RequestSocket(ServerAddress.RouterAddress))
                 {
                     socket.TrySendMultipartMessage(Timeout, message);//发送msg
                     NetMQMessage resMessage = new NetMQMessage();
                     socket.TryReceiveMultipartMessage(Timeout, ref resMessage);//接收msg
+                    var error = resMessage[0].ConvertToInt32();
+                    if (error >= 800000 && error <= 899999)
+                        throw new Exception($"错误代码 : {error}\r\n{resMessage[1].ConvertToString(Encoding.UTF8)}");
                     return Deserialize<R>(resMessage);
                 }
             });
         }
-
     }
 }

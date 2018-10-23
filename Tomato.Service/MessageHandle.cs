@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tomato.Net.Protocol;
 using Tomato.Protocol;
 namespace Tomato.Net
 {
@@ -30,7 +31,7 @@ namespace Tomato.Net
     {
         private MessageHandle() { }
         public static MessageHandle Instance { get; } = new MessageHandle();
-        private readonly Dictionary<Protocol.ProtoEnum, INetworkHandle> DicHandles = new Dictionary<Protocol.ProtoEnum, INetworkHandle>();
+        internal readonly Dictionary<ProtoEnum, INetworkHandle> DicHandles  = new Dictionary<ProtoEnum, INetworkHandle>();
         /// <summary>
         /// 注册消息处理委托
         /// </summary>
@@ -44,7 +45,7 @@ namespace Tomato.Net
                 throw new ArgumentException($"{MessageType}消息句柄已被注册!");
             DicHandles.Add(MessageType, new NetworkHandleBase<T>(new HandlerDelegate<T>(handle)));
         }
-        public bool Exist(Protocol.ProtoEnum MessageType)
+        public bool Exist(ProtoEnum MessageType)
         {
             return DicHandles.ContainsKey(MessageType);
         }
@@ -57,7 +58,7 @@ namespace Tomato.Net
         /// 注销委托
         /// </summary>
         /// <param name="MessageType"></param>
-        public void UnloadHandle(Protocol.ProtoEnum MessageType)
+        public void UnloadHandle(ProtoEnum MessageType)
         {
             if (DicHandles.ContainsKey(MessageType))
                 throw new ArgumentException($"{MessageType}消息句柄不存在!");
@@ -68,7 +69,7 @@ namespace Tomato.Net
         /// </summary>
         /// <param name="messageType"></param>
         /// <returns></returns>
-        public INetworkHandle GetHandle(Protocol.ProtoEnum messageType)
+        public INetworkHandle GetHandle(ProtoEnum messageType)
         {
             if (DicHandles.TryGetValue(messageType, out INetworkHandle handle))
                 return handle;

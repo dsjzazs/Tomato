@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
+using Tomato.Protocol;
 
 namespace Tomato.Net
 {
@@ -18,7 +19,25 @@ namespace Tomato.Net
         public event EventHandler<RequestEventArgs> RequestEvent;
         private List<NetMQ.Sockets.ResponseSocket> _sockList = new List<NetMQ.Sockets.ResponseSocket>();
         private List<NetMQ.NetMQPoller> _pollerList = new List<NetMQ.NetMQPoller>();
+        public string ServiceName { get; set; }
         public bool IsRunning { get; private set; }
+
+
+        private Protocol.RegisterServiceResponse Initialize()
+        {
+            NetMQ.Sockets.RequestSocket req = new NetMQ.Sockets.RequestSocket();
+            req.Connect(ServerAddress.RegisterServiceAddress);
+            var stream = new System.IO.MemoryStream();
+            ProtoBuf.Serializer.Serialize(stream, new Tomato.Net.Protocol.RegisterService()
+            {
+                ServiceName = ServiceName,
+                ProtocolList = MessageHandle.Instance.DicHandles.Keys.Select(i => (int)i).ToList(),
+                IsRegister = true,
+            });
+            if (req.TrySendFrame(stream.ToArray()))
+                return ProtoBuf.Serializer.Deserialize<Protocol.RegisterServiceResponse>(new System.IO.MemoryStream(req.ReceiveFrameBytes()));
+            return null;
+        }
         /// <summary>
         /// 启动服务,开始接收消息
         /// </summary>
@@ -29,23 +48,29 @@ namespace Tomato.Net
             if (IsRunning)
                 return false;
 
-            for (int i = 0; i < Consumer; i++)
+            var initial_res = Initialize();
+            if (initial_res?.Success == true)
             {
-                NetMQ.Sockets.ResponseSocket response = new NetMQ.Sockets.ResponseSocket();
-                response.Connect(Broker.WorkerAddress);
-                response.ReceiveReady += Response_ReceiveReady;
-                /* 修正客户端无法异步请求的问题
-                 * 每一个REP必须使用独立的一条线程
-                 * 当REP收到请求之后,只有回复以后才能接受下一个请求
-                 * 如果所有Consumer(REP)都正在工作,则其他请求就会挂起
-                 * 所以最大同时请求数量受Consumer的影响
-                 */
-                var poller = new NetMQPoller() { response, new NetMQTimer(Timeout) };
-                poller.RunAsync();
-                _pollerList.Add(poller);
-                _sockList.Add(response);
+                for (int i = 0; i < Consumer; i++)
+                {
+                    NetMQ.Sockets.ResponseSocket response = new NetMQ.Sockets.ResponseSocket();
+                    response.Connect($"{ServerAddress.IP}:{initial_res.Port}");
+                    response.ReceiveReady += Response_ReceiveReady;
+                    /* 修正客户端无法异步请求的问题
+                     * 每一个REP必须使用独立的一条线程
+                     * 当REP收到请求之后,只有回复以后才能接受下一个请求
+                     * 如果所有Consumer(REP)都正在工作,则其他请求就会挂起
+                     * 所以最大同时请求数量受Consumer的影响
+                     */
+                    var poller = new NetMQPoller() { response, new NetMQTimer(Timeout) };
+                    poller.RunAsync();
+                    _pollerList.Add(poller);
+                    _sockList.Add(response);
+                    IsRunning = true;
+                }
             }
-            return IsRunning = true;
+
+            return IsRunning;
         }
         /// <summary>
         /// 停止消息接收服务
@@ -97,7 +122,7 @@ namespace Tomato.Net
             NetMQMessage mqMsg = null;
             if (e.Socket.TryReceiveMultipartMessage(Timeout, ref mqMsg))
             {
-                var messageType = (Protocol.ProtoEnum)mqMsg[0].ConvertToInt32();
+                var messageType = (ProtoEnum)mqMsg[0].ConvertToInt32();
                 var HeaderBytes = mqMsg[1].Buffer;
                 var BodyBytes = mqMsg[2].Buffer;
                 Header header;

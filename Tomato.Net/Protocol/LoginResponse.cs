@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
-
+using Tomato.Net.Protocol;
 
 namespace Tomato.Protocol
 {

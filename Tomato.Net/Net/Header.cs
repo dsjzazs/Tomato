@@ -29,6 +29,6 @@ namespace Tomato.Net
         /// </summary>
         [ProtoBuf.ProtoMember(4)]
         public bool IsResponse { get; set; }
-        public Protocol.ProtoEnum MessageType { get; set; }
+        public Tomato.Protocol.ProtoEnum MessageType { get; set; }
     }
 }
