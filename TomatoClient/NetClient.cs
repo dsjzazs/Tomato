@@ -46,14 +46,12 @@ namespace TomatoClient
             NetMQ.NetMQMessage mqms = new NetMQMessage();
             header.SendTime = DateTime.Now;
             //对象类型
-            mqms.Append(new NetMQFrame(BitConverter.GetBytes((UInt32)body.MessageType)));
+            mqms.Append((Int32)body.MessageType);
             using (var ms = new System.IO.MemoryStream())
             {
                 ProtoBuf.Serializer.Serialize(ms, header);
                 //头bytes
                 mqms.Append(ms.ToArray());
-                using (var ms2 = new System.IO.MemoryStream(ms.ToArray()))
-                    header = ProtoBuf.Serializer.Deserialize<Header>(ms2);
             }
             using (var ms2 = new System.IO.MemoryStream())
             {
@@ -62,7 +60,7 @@ namespace TomatoClient
                 mqms.Append(ms2.ToArray());
             }
             //结束帧
-            mqms.Append(NetMQFrame.Empty);
+            mqms.AppendEmptyFrame();
             return mqms;
         }
         /// <summary>

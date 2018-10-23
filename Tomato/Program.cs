@@ -13,7 +13,7 @@ namespace Tomato
     {
         static void Main(string[] args)
         {
-            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<EF.Model>());
+            System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<Model.Model>());
             Broker.RunAsync();
             MessageService.Instance.StartService(10);
             UserManager.Instance.Initialize();

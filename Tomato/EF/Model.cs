@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
-namespace Tomato.EF
+namespace Tomato.Model
 {
     public class Model : DbContext
     {

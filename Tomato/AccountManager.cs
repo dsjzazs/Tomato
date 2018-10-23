@@ -31,7 +31,7 @@ namespace Tomato
             var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName);
             if (user == null)
             {
-                user = new EF.UserInfo()
+                user = new Model.UserInfo()
                 {
                     Email = body.Email,
                     Gender = body.Gender,
@@ -39,7 +39,7 @@ namespace Tomato
                     Password = body.Password,
                     UserName = body.UserName,
                 };
-                var session = new EF.Session()
+                var session = new Model.Session()
                 {
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
@@ -74,7 +74,7 @@ namespace Tomato
             var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWord);
             if (user != null)
             {
-                var session = new EF.Session()
+                var session = new Model.Session()
                 {
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
