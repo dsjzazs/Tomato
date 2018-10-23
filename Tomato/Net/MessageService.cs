@@ -94,12 +94,12 @@ namespace Tomato.Net
         /// <param name="e"></param>
         private void Response_ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
-            List<byte[]> bytes = null;
-            if (e.Socket.TryReceiveMultipartBytes(Timeout, ref bytes))
+            NetMQMessage mqMsg = null;
+            if (e.Socket.TryReceiveMultipartMessage(Timeout, ref mqMsg))
             {
-                var messageType = (Protocol.ProtoEnum)BitConverter.ToUInt32(bytes[0], 0);
-                var HeaderBytes = bytes[1];
-                var BodyBytes = bytes[2];
+                var messageType = (Protocol.ProtoEnum)mqMsg[0].ConvertToInt32();
+                var HeaderBytes = mqMsg[1].Buffer;
+                var BodyBytes = mqMsg[2].Buffer;
                 Header header;
                 using (var ms = new System.IO.MemoryStream(HeaderBytes))
                     header = ProtoBuf.Serializer.Deserialize<Header>(ms);
