@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using NetMQ;
 using Tomato.Net;
 
-namespace TomatoClient
+namespace Tomato.Client
 {
     public partial class Form1 : Form
     {
@@ -21,8 +21,7 @@ namespace TomatoClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Console.WindowHeight = 10;
-            Console.WindowWidth = 60;
+  
         }
         private async void button1_Click(object sender, EventArgs e)
         {
@@ -35,6 +34,7 @@ namespace TomatoClient
             var res = await NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login);
             if (res.Success)
             {
+                NetClient.Instance.Session = res.Session;
                 Console.WriteLine($"登陆成功!\r\n{res.Session.ToString()}");
                 label3.Text = ($"登陆成功!\r\n{res.Session.ToString()}");
             }

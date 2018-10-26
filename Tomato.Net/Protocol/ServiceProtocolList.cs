@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Tomato.Net.Protocol
 {
     [ProtoBuf.ProtoContract]
-    public class RegisterService
+    public class RegisterServiceRequest
     {
         [ProtoBuf.ProtoMember(1)]
         public bool IsRegister { get; set; }
@@ -21,5 +21,6 @@ namespace Tomato.Net.Protocol
     {
         [ProtoBuf.ProtoMember(1)] public int Port { get; set; }
         [ProtoBuf.ProtoMember(2)] public bool Success { get; set; }
+        [ProtoBuf.ProtoMember(3)] public string Message { get; set; }
     }
 }

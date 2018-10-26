@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
+using Tomato.Net.Protocol;
 
-namespace RouteService
+namespace Tomato.RouteService
 {
     public class ServiceModelInfo
     {
@@ -32,6 +33,28 @@ namespace RouteService
             RegisterService_REP.ReceiveReady += RegisterService_REP_ReceiveReady;
             Poller.Add(RegisterService_REP);
             Poller.RunAsync();
+        }
+
+        /// <summary>
+        /// 卸载服务
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static bool Uninstall(List<int> list)
+        {
+            if (list == null)
+                return false;
+
+            foreach (var item in list)
+            {
+                var service = FillService(item);
+                if (service != null)
+                {
+                    service.Dealer.Dispose();
+                    service_list.Remove(service);
+                }
+            }
+            return false;
         }
         /// <summary>
         /// 卸载服务
@@ -86,40 +109,34 @@ namespace RouteService
         private static void RegisterService_REP_ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
             Tomato.Net.Protocol.RegisterServiceResponse response;
-            var res = ProtoBuf.Serializer.Deserialize<Tomato.Net.Protocol.RegisterService>(new System.IO.MemoryStream(e.Socket.ReceiveFrameBytes()));
+            var res = ProtoBuf.Serializer.Deserialize<RegisterServiceRequest>(new System.IO.MemoryStream(e.Socket.ReceiveFrameBytes()));
             if (res.IsRegister)
             {
                 if (_checkProtocol(res.ProtocolList))
-                {
-                    var service = new ServiceModelInfo();
-                    service.Dealer = new NetMQ.Sockets.DealerSocket();
-                    var port = service.Dealer.BindRandomPort(@"tcp://localhost");
-                    service.ProtocolList = res.ProtocolList;
-                    service.ServiceName = res.ServiceName;
-                    service_list.Add(service);
-                    Console.WriteLine($"Load Service:{res.ServiceName} Port:{port} ProtocolList:{_listToString(res.ProtocolList)}");
-                    response = new Tomato.Net.Protocol.RegisterServiceResponse() { Port = port, Success = true };
-                }
-                else
-                {
-                    response = new Tomato.Net.Protocol.RegisterServiceResponse() { Port = 0, Success = false };
-                }
-                var stream = new System.IO.MemoryStream();
-                ProtoBuf.Serializer.Serialize(stream, response);
-                e.Socket.SendFrame(stream.ToArray());
+                    ServiceManager.Uninstall(res.ProtocolList);
+
+                var service = new ServiceModelInfo();
+                service.Dealer = new NetMQ.Sockets.DealerSocket();
+                var port = service.Dealer.BindRandomPort(ServerAddress.IP);
+                service.ProtocolList = res.ProtocolList;
+                service.ServiceName = res.ServiceName;
+                service_list.Add(service);
+                Console.WriteLine($"Load Service:{res.ServiceName} Port:{port} ProtocolList:{_listToString(res.ProtocolList)}");
+                response = new RegisterServiceResponse() { Port = port, Success = true, Message = "服务模块加载成功" };
             }
             else
             {
-                foreach (var item in res.ProtocolList)
-                {
-                    var service = FillService(item);
-                    if (service != null)
-                    {
-                        service.Dealer.Dispose();
-                        service_list.Remove(service);
-                    }
-                }
+                ServiceManager.Uninstall(res.ProtocolList);
+                Console.WriteLine($"Uninstall Service : {res.ServiceName}");
+                response = new RegisterServiceResponse() { Port = 0, Success = true, Message = "服务模块卸载成功" };
             }
+
+            using (var stream = new System.IO.MemoryStream())
+            {
+                ProtoBuf.Serializer.Serialize(stream, response);
+                e.Socket.SendFrame(stream.ToArray());
+            }
+
         }
         private static string _listToString(System.Collections.IEnumerable list)
         {

@@ -11,4 +11,10 @@ namespace Tomato.Net
     {
         ProtoEnum MessageType { get; }
     }
+
+    public class RemoteServiceException : Exception
+    {
+        public RemoteServiceException() { }
+        public RemoteServiceException(string text) : base(text) { }
+    }
 }

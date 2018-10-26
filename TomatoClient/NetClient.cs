@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 
-namespace TomatoClient
+namespace Tomato.Client
 {
     public class NetClient
     {
         private NetClient() { }
-        private Guid userSession;
+        public Guid Session { get; set; } = Guid.Empty;
         /// <summary>
         /// 发送和接收超时
         /// </summary>
@@ -73,7 +73,7 @@ namespace TomatoClient
         {
             return Request<R>(new Header()
             {
-                Session = userSession,
+                Session = Session,
                 GUID = Guid.NewGuid(),
                 MessageType = body.MessageType,
                 IsResponse = false,
@@ -91,16 +91,24 @@ namespace TomatoClient
         {
             return Task.Factory.StartNew<R>(() =>
             {
-                var message = Serialize(header, body);
+                var req_msg = Serialize(header, body);
                 using (var socket = new NetMQ.Sockets.RequestSocket(ServerAddress.RouterAddress))
                 {
-                    socket.TrySendMultipartMessage(Timeout, message);//发送msg
-                    NetMQMessage resMessage = new NetMQMessage();
-                    socket.TryReceiveMultipartMessage(Timeout, ref resMessage);//接收msg
-                    var error = resMessage[0].ConvertToInt32();
-                    if (error >= 800000 && error <= 899999)
-                        throw new Exception($"错误代码 : {error}\r\n{resMessage[1].ConvertToString(Encoding.UTF8)}");
-                    return Deserialize<R>(resMessage);
+                    if (socket.TrySendMultipartMessage(Timeout, req_msg))//发送msg
+                    {
+                        NetMQMessage rep_msg = new NetMQMessage();
+                        if (socket.TryReceiveMultipartMessage(Timeout, ref rep_msg))//接收msg
+                        {
+                            var error = rep_msg[0].ConvertToInt32();
+                            if (error >= 800000 && error <= 899999)
+                                throw new RemoteServiceException($"错误代码 : {error}\r\n{rep_msg[1].ConvertToString(Encoding.UTF8)}");
+                            return Deserialize<R>(rep_msg);
+                        }
+                        else
+                            throw new NetMQ.EndpointNotFoundException($"Request Guid : {header.GUID}.消息接收失败");
+                    }
+                    else
+                        throw new NetMQ.EndpointNotFoundException($"Request Guid : {header.GUID}.消息发送失败");
                 }
             });
         }

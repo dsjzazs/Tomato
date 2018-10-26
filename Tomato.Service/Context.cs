@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using NetMQ;
 namespace Tomato.Net
 {
+    /// <summary>
+    /// 服务会话的简单上下文对象
+    /// </summary>
     public class Context
     {
-        internal static Context CreateContext(Model.IUser user, Header header, Model.Model dbContext, NetMQ.NetMQSocket socket)
+        internal static Context CreateContext(Model.IUser user, Header header, Model.EntityModel dbContext, NetMQ.NetMQSocket socket)
         {
             return new Context()
             {
@@ -18,7 +21,8 @@ namespace Tomato.Net
                 DbContext = dbContext
             };
         }
-        public Model.Model DbContext { get; private set; }
+        public  TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
+        public Model.EntityModel DbContext { get; private set; }
         public Header Header { get; private set; }
         public Model.IUser User { get; private set; }
         private NetMQ.NetMQSocket Socket;
@@ -36,8 +40,16 @@ namespace Tomato.Net
         }
         public bool Response<T>(Header header, T body) where T : IProtocol
         {
+
+            if (body == null)
+                throw new ArgumentNullException("body is Null !!");
+
+            if (header == null)
+                throw new ArgumentNullException("header is Null !!");
+
             if (_answer)
                 throw new Exception("该请求只能响应一次消息!");
+
 
             NetMQ.NetMQMessage mqms = new NetMQMessage();
             header.SendTime = DateTime.Now;
@@ -55,7 +67,7 @@ namespace Tomato.Net
             }
             //结束帧
             mqms.Append(NetMQFrame.Empty);
-            return _answer = Socket.TrySendMultipartMessage(TimeSpan.FromSeconds(1), mqms);
+            return _answer = Socket.TrySendMultipartMessage(Timeout, mqms);
         }
     }
 }

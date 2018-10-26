@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tomato.Model;
 using Tomato.Net;
-using Tomato.Protocol;
-using System.Messaging;
-using NetMQ;
-namespace Tomato
+
+namespace Tomato.AccountService
 {
+
+
     class Program
     {
+
         static void Main(string[] args)
         {
-        
-            //       Broker.RunAsync();
+            EntityModel.InitializeDb(true);
             MessageService.Instance.ServiceName = "用户管理模块";
             UserManager.Instance.Initialize();
             MessageService.Instance.StartService(10);
-            Console.ReadKey();
+            while (true)
+            {
+                if (Console.ReadLine() == "exit")
+                {
+                    MessageService.Instance.StopService();
+                    return;
+                }
+            }
         }
-
-
     }
 }

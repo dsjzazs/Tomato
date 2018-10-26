@@ -1,4 +1,4 @@
-﻿namespace TomatoClient
+﻿namespace Tomato.Client
 {
     partial class Form1
     {
