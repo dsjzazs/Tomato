@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetMQ;
 using Tomato.Net;
+using Tomato.Protocol.Request;
+using Tomato.Protocol.Response;
 
 namespace Tomato.Client
 {
@@ -26,12 +28,12 @@ namespace Tomato.Client
         private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            var login = new Tomato.Protocol.LoginRequest()
+            var login = new ReqUserLogin()
             {
                 UserName = textBox1.Text,
                 PassWord = textBox2.Text
             };
-            var res = await NetClient.Instance.Request<Tomato.Protocol.LoginResponse>(login);
+            var res = await NetClient.Instance.Request<ResUserLogin>(login);
             if (res.Success)
             {
                 NetClient.Instance.Session = res.Session;
@@ -46,12 +48,12 @@ namespace Tomato.Client
         private async void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
-            var reg = new Tomato.Protocol.RegisterRequest()
+            var reg = new ReqUserRegister()
             {
                 UserName = textBox1.Text,
                 Password = textBox2.Text
             };
-            var res = await NetClient.Instance.Request<Tomato.Protocol.RegisterResponse>(reg);
+            var res = await NetClient.Instance.Request<ResUserRegister>(reg);
             if (res.Success)
                 label3.Text = ($"注册成功!\r\n{res.Session.ToString()}");
             else

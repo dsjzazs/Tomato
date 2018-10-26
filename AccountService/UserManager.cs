@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
-using Tomato.Protocol;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using Tomato.Model;
+using Tomato.Protocol.Request;
+using Tomato.Protocol.Response;
 
 namespace Tomato.AccountService
 {
@@ -18,15 +19,15 @@ namespace Tomato.AccountService
         public void Initialize()
         {
             //注册委托
-            MessageHandle.Instance.RegisterHandle<LoginRequest>(LoginRequestHandle);
-            MessageHandle.Instance.RegisterHandle<RegisterRequest>(RegisterRequestHandel);
+            MessageHandle.Instance.RegisterHandle<ReqUserLogin>(LoginRequestHandle);
+            MessageHandle.Instance.RegisterHandle<ReqUserRegister>(RegisterRequestHandel);
         }
         public void Uninitialize()
         {
-            MessageHandle.Instance.UnloadHandle<LoginRequest>();
-            MessageHandle.Instance.UnloadHandle<RegisterRequest>();
+            MessageHandle.Instance.UnloadHandle<ReqUserLogin>();
+            MessageHandle.Instance.UnloadHandle<ReqUserRegister>();
         }
-        private void RegisterRequestHandel(Context context, RegisterRequest body)
+        private void RegisterRequestHandel(Context context, ReqUserRegister body)
         {
             var db = context.DbContext;
             var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName);
@@ -52,7 +53,7 @@ namespace Tomato.AccountService
                 Console.WriteLine(user.GUID);
 
                 Console.WriteLine($"Register :  UserName : {user.UserName}  NickName : {user.NickName} PassWrod : {user.Password}");
-                context.Response(new RegisterResponse()
+                context.Response(new ResUserRegister()
                 {
                     Message = "注册成功!",
                     Success = true,
@@ -61,7 +62,7 @@ namespace Tomato.AccountService
             }
             else
             {
-                context.Response(new RegisterResponse()
+                context.Response(new ResUserRegister()
                 {
                     Message = "账号已存在!",
                     Success = false,
@@ -69,7 +70,7 @@ namespace Tomato.AccountService
             }
         }
 
-        private void LoginRequestHandle(Context context, LoginRequest Body)
+        private void LoginRequestHandle(Context context, ReqUserLogin Body)
         {
             var db = context.DbContext;
             var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWord);
@@ -84,7 +85,7 @@ namespace Tomato.AccountService
                 };
                 db.SessionDB.Add(session);
                 db.SaveChanges();
-                context.Response(new LoginResponse()
+                context.Response(new ResUserLogin()
                 {
                     Message = "登陆成功!",
                     Success = true,
@@ -94,7 +95,7 @@ namespace Tomato.AccountService
             }
             else
             {
-                context.Response(new LoginResponse()
+                context.Response(new ResUserLogin()
                 {
                     Message = "账号或密码错误!",
                     Success = false,

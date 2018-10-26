@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 
-namespace Tomato.Protocol
+namespace Tomato.Protocol.Request
 {
     [ProtoBuf.ProtoContract]
-    public class RegisterRequest : IProtocol
+    public class ReqUserRegister : IProtocol
     {
         [ProtoBuf.ProtoMember(1)]
         public string UserName { get; set; }

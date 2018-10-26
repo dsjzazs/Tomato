@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Protocol
+namespace Tomato.Protocol.Request
 {
     /// <summary>
     /// 登陆请求
     /// </summary>
     [ProtoBuf.ProtoContract]
-    public class LoginRequest : Net.IProtocol
+    public class ReqUserLogin : Net.IProtocol
     {
         /// <summary>
         /// 用户账号

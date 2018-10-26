@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Tomato.Net;
 using Tomato.Net.Protocol;
 
-namespace Tomato.Protocol
+namespace Tomato.Protocol.Response
 {
     /// <summary>
     /// 登陆响应
     /// </summary>
     [ProtoBuf.ProtoContract]
-    public class LoginResponse : IProtocol
+    public class ResUserLogin : IProtocol
     {
         /// <summary>
         /// 登陆否成功

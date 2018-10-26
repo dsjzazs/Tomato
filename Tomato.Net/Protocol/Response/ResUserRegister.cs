@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Protocol
+namespace Tomato.Protocol.Response
 {
     [ProtoBuf.ProtoContract]
-    public class RegisterResponse : Net.IProtocol
+    public class ResUserRegister : Net.IProtocol
     {
         [ProtoBuf.ProtoMember(1)]
         public bool Success { get; set; }
