@@ -78,7 +78,7 @@
     <Compile Include="Model\Session.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="MessageHandle.cs" />
-    <Compile Include="MessageService.cs" />
+    <Compile Include="ServiceBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

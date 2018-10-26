@@ -29,8 +29,6 @@ namespace Tomato.Net
     public delegate void HandlerDelegate<T>(Context context, T body) where T : IProtocol, new();
     public class MessageHandle
     {
-        private MessageHandle() { }
-        public static MessageHandle Instance { get; } = new MessageHandle();
         internal readonly Dictionary<ProtoEnum, INetworkHandle> DicHandles  = new Dictionary<ProtoEnum, INetworkHandle>();
         /// <summary>
         /// 注册消息处理委托

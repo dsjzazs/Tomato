@@ -4,62 +4,87 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
+using Tomato.Net;
 using Tomato.Net.Protocol;
 using Tomato.Protocol;
 
-namespace Tomato.Net
+namespace Tomato
 {
-    public class MessageService
+    /// <summary>
+    /// 服务模块基类,所有服务模块必须继承
+    /// </summary>
+    public abstract class ServiceBase
     {
         /// <summary>
         /// 发送和接收超时
         /// </summary>
-        public static TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
-        private MessageService() { }
-        public static MessageService Instance { get; } = new MessageService();
+        public TimeSpan Timeout { get; set; }
+        /// <summary>
+        /// 消息请求事件
+        /// </summary>
         public event EventHandler<RequestEventArgs> RequestEvent;
-        private List<NetMQ.Sockets.ResponseSocket> _sockList = new List<NetMQ.Sockets.ResponseSocket>();
-        private List<NetMQ.NetMQPoller> _pollerList = new List<NetMQ.NetMQPoller>();
-        public string ServiceName { get; set; }
+        private List<NetMQ.Sockets.ResponseSocket> _sockList;
+        private List<NetMQ.NetMQPoller> _pollerList;
+        /// <summary>
+        /// 消息回调
+        /// </summary>
+        public MessageHandle MessageHandle { get; }
+        /// <summary>
+        /// 服务名称
+        /// </summary>
+        public abstract string ServiceName { get; }
         /// <summary>
         /// 服务是否已运行
         /// </summary>
         public bool IsRunning { get; private set; }
-        private log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(MessageService));
-
+        private log4net.ILog Logger;
+        public ServiceBase()
+        {
+            this.Timeout = TimeSpan.FromMilliseconds(1000);
+            this._sockList = new List<NetMQ.Sockets.ResponseSocket>();
+            this._pollerList = new List<NetMQ.NetMQPoller>();
+            this.MessageHandle = new MessageHandle();
+            this.Logger = log4net.LogManager.GetLogger(ServiceName);
+        }
         /// <summary>
         /// 初始化服务模块
         /// 在这里,我们将已注册的protocolID发送到路由端 Tomato.RouteService
         /// </summary>
         /// <returns></returns>
-        private Protocol.RegisterServiceResponse Initialize(bool isRegister = true)
+        private RegisterServiceResponse Initialize(bool isRegister = true)
         {
+            Logger.Debug($"{this.ServiceName} 正在向路由注册模块...");
             NetMQ.Sockets.RequestSocket req = new NetMQ.Sockets.RequestSocket();
             req.Connect(ServerAddress.RegisterServiceAddress);
-            var stream = new System.IO.MemoryStream();
-            ProtoBuf.Serializer.Serialize(stream, new RegisterServiceRequest()
+            using (var stream = new System.IO.MemoryStream())
             {
-                ServiceName = ServiceName,
-                ProtocolList = MessageHandle.Instance.DicHandles.Keys.Select(i => (int)i).ToList(),
-                IsRegister = isRegister,
-            });
-            if (req.TrySendFrame(stream.ToArray()))
-                return ProtoBuf.Serializer.Deserialize<RegisterServiceResponse>(new System.IO.MemoryStream(req.ReceiveFrameBytes()));
+                ProtoBuf.Serializer.Serialize(stream, new RegisterServiceRequest()
+                {
+                    ServiceName = ServiceName,
+                    ProtocolList = MessageHandle.DicHandles.Keys.Select(i => (int)i).ToList(),
+                    IsRegister = isRegister,
+                });
+                if (req.TrySendFrame(stream.ToArray()))
+                    return ProtoBuf.Serializer.Deserialize<RegisterServiceResponse>(new System.IO.MemoryStream(req.ReceiveFrameBytes()));
+            }
             return null;
         }
         /// <summary>
         /// 启动服务,开始接收消息
         /// </summary>
-        /// <param name="Consumer">消费者数量</param>
+        /// <param name="Consumer">线程数</param>
         /// <returns></returns>
         public bool StartService(int Consumer)
         {
             if (IsRunning)
                 return false;
 
+            Logger.Debug($"{this.ServiceName} 启用线程数量:{Consumer}");
+            //向路由注册服务
             var initial_res = Initialize();
             if (initial_res?.Success == true)
             {
+                Logger.Info($"{this.ServiceName} 服务模块注册成功");
                 for (int i = 0; i < Consumer; i++)
                 {
                     NetMQ.Sockets.ResponseSocket response = new NetMQ.Sockets.ResponseSocket();
@@ -78,7 +103,8 @@ namespace Tomato.Net
                     IsRunning = true;
                 }
             }
-
+            else
+                Logger.Error($"{this.ServiceName} 路由注册服务失败!");
             return IsRunning;
         }
         /// <summary>
@@ -138,7 +164,7 @@ namespace Tomato.Net
                     return;
 
                 //交给注册的委托
-                var handle = MessageHandle.Instance.GetHandle(context.Header.MessageType);
+                var handle = MessageHandle.GetHandle(context.Header.MessageType);
                 if (handle != null)
                     handle.Invoke(context, BodyBytes);//全程务必保持由当前线程同步执行
                 else

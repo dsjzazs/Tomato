@@ -16,14 +16,13 @@ namespace Tomato.ServiceAccount
         static void Main(string[] args)
         {
             EntityModel.InitializeDb(true);
-            MessageService.Instance.ServiceName = "用户管理模块";
-            UserManager.Instance.Initialize();
-            MessageService.Instance.StartService(10);
+            var service = new UserManager();
+            service.StartService(10);
             while (true)
             {
                 if (Console.ReadLine() == "exit")
                 {
-                    MessageService.Instance.StopService();
+                    service.StopService();
                     return;
                 }
             }

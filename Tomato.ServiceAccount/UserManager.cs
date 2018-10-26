@@ -13,19 +13,20 @@ using Tomato.Protocol.Response;
 
 namespace Tomato.ServiceAccount
 {
-    public class UserManager
+    public class UserManager : ServiceBase
     {
-        public static UserManager Instance { get; } = new UserManager();
+        public override string ServiceName => "用户管理模块";
+
         public void Initialize()
         {
             //注册委托
-            MessageHandle.Instance.RegisterHandle<ReqUserLogin>(LoginRequestHandle);
-            MessageHandle.Instance.RegisterHandle<ReqUserRegister>(RegisterRequestHandel);
+            MessageHandle.RegisterHandle<ReqUserLogin>(LoginRequestHandle);
+            MessageHandle.RegisterHandle<ReqUserRegister>(RegisterRequestHandel);
         }
         public void Uninitialize()
         {
-            MessageHandle.Instance.UnloadHandle<ReqUserLogin>();
-            MessageHandle.Instance.UnloadHandle<ReqUserRegister>();
+            MessageHandle.UnloadHandle<ReqUserLogin>();
+            MessageHandle.UnloadHandle<ReqUserRegister>();
         }
         private void RegisterRequestHandel(Context context, ReqUserRegister body)
         {
