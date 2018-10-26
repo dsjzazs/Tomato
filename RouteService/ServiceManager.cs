@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Tomato.Net;
 using Tomato.Net.Protocol;
 
-namespace Tomato.RouteService
+namespace Tomato.Route
 {
     public class ServiceModelInfo
     {

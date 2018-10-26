@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 
-namespace Tomato.TaskPlanService
+namespace Tomato.ServiceTaskPlan
 {
     public class TaskPlanManager
     {
@@ -14,8 +14,8 @@ namespace Tomato.TaskPlanService
         #region 启动和停止模块
         public void Initialization()
         {
-            MessageHandle.Instance.RegisterHandle<>();
-            MessageHandle.Instance.RegisterHandle<>();
+            //MessageHandle.Instance.RegisterHandle<>();
+            //MessageHandle.Instance.RegisterHandle<>();
         }
 
         public void UnInitialization()

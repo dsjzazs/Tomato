@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 
-namespace Tomato.RouteService
+namespace Tomato.Route
 {
     /// <summary>
     /// 代理

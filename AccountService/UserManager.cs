@@ -11,7 +11,7 @@ using Tomato.Model;
 using Tomato.Protocol.Request;
 using Tomato.Protocol.Response;
 
-namespace Tomato.AccountService
+namespace Tomato.ServiceAccount
 {
     public class UserManager
     {

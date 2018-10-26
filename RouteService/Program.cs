@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.RouteService
+namespace Tomato.Route
 {
     class Program
     {

@@ -7,13 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Net", "Tomato.Net\To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Client", "TomatoClient\Tomato.Client.csproj", "{7C301841-1B17-4203-85BC-1D6ED4FE91C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.RouteService", "RouteService\Tomato.RouteService.csproj", "{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Route", "RouteService\Tomato.Route.csproj", "{2EE9E255-0A58-4C09-A75D-DAF7A40EBF01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Service", "Tomato.Service\Tomato.Service.csproj", "{3C4BCF7F-7A53-462C-B80F-FF4A04416491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.AccountService", "AccountService\Tomato.AccountService.csproj", "{7314E0AB-4DA9-48FB-AE75-724B579CDCB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.ServiceAccount", "AccountService\Tomato.ServiceAccount.csproj", "{7314E0AB-4DA9-48FB-AE75-724B579CDCB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.TaskPlanService", "Tomato.TaskPlanService\Tomato.TaskPlanService.csproj", "{AE107090-D8A3-44FB-B8B9-FC5F404C7345}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.ServiceTaskPlan", "Tomato.TaskPlanService\Tomato.ServiceTaskPlan.csproj", "{AE107090-D8A3-44FB-B8B9-FC5F404C7345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tomato.Entity", "Tomato.Entity\Tomato.Entity.csproj", "{D34CACE6-1BF3-4014-83F7-C39E997B92F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AE107090-D8A3-44FB-B8B9-FC5F404C7345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE107090-D8A3-44FB-B8B9-FC5F404C7345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE107090-D8A3-44FB-B8B9-FC5F404C7345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34CACE6-1BF3-4014-83F7-C39E997B92F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34CACE6-1BF3-4014-83F7-C39E997B92F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34CACE6-1BF3-4014-83F7-C39E997B92F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34CACE6-1BF3-4014-83F7-C39E997B92F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

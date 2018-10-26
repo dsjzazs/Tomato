@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tomato.Model;
 using Tomato.Net;
 
-namespace Tomato.AccountService
+namespace Tomato.ServiceAccount
 {
 
 
