@@ -8,8 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using Tomato.Model;
-using Tomato.Protocol.Request;
-using Tomato.Protocol.Response;
+using Tomato.Protocol;
 
 namespace Tomato.ServiceAccount
 {

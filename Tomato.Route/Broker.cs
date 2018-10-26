@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Net;
 
 namespace Tomato.Route
 {
@@ -53,26 +52,34 @@ namespace Tomato.Route
         /// <param name="e"></param>
         private static void Router_ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
-            //前两个字节是路由的信息
-            var msg = e.Socket.ReceiveMultipartMessage();
-            //索引[2]才是协议ID
-            var protocolID = msg[2].ConvertToInt32();
-            var service = ServiceManager.FillService(protocolID);
-            if (service == null)
+            try
             {
-                _response_exception(msg, e, 800001, $"消息请求：{protocolID}，找不到模块！");
-                return;
+                //前两个字节是路由的信息
+                var msg = e.Socket.ReceiveMultipartMessage();
+                //索引[2]才是协议ID
+                var protocolID = msg[2].ConvertToInt32();
+                var service = ServiceManager.FillService(protocolID);
+                if (service == null)
+                {
+                    _response_exception(msg, e, 800001, $"消息请求：{protocolID}，找不到模块！");
+                    return;
+                }
+
+                var res = service.Dealer.TrySendMultipartMessage(msg);
+                Console.WriteLine($"路由 接入 : {protocolID} >> {service.ServiceName} 转发 : {res}");
+                if (res)
+                    ProxyBetween(service.Dealer, e.Socket, null);
+                else
+                {
+                    ServiceManager.Uninstall(service);
+                    _response_exception(msg, e, 800002, $"消息请求：{protocolID}，找不到模块！");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
-            var res = service.Dealer.TrySendMultipartMessage(msg);
-            Console.WriteLine($"路由 接入 : {protocolID} >> {service.ServiceName} 转发 : {res}");
-            if (res)
-                ProxyBetween(service.Dealer, e.Socket, null);
-            else
-            {
-                ServiceManager.Uninstall(service);
-                _response_exception(msg, e, 800002, $"消息请求：{protocolID}，找不到模块！");
-            }
         }
         /// <summary>
         /// 向服务模块响应异常信息
@@ -122,5 +129,5 @@ namespace Tomato.Route
             msg.Close();
         }
     }
-   
+
 }

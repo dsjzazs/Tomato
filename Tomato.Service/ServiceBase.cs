@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
 using Tomato.Net;
-using Tomato.Net.Protocol;
 using Tomato.Protocol;
 
 namespace Tomato
@@ -51,21 +50,21 @@ namespace Tomato
         /// 在这里,我们将已注册的protocolID发送到路由端 Tomato.RouteService
         /// </summary>
         /// <returns></returns>
-        private RegisterServiceResponse _InitializeService(bool isRegister = true)
+        private ResRegisterService _InitializeService(bool isRegister = true)
         {
             Logger.Debug($"{this.ServiceName} 正在向路由注册模块...");
             NetMQ.Sockets.RequestSocket req = new NetMQ.Sockets.RequestSocket();
             req.Connect(ServerAddress.RegisterServiceAddress);
             using (var stream = new System.IO.MemoryStream())
             {
-                ProtoBuf.Serializer.Serialize(stream, new RegisterServiceRequest()
+                ProtoBuf.Serializer.Serialize(stream, new ReqRegisterService()
                 {
                     ServiceName = ServiceName,
                     ProtocolList = MessageHandle.DicHandles.Keys.Select(i => (int)i).ToList(),
                     IsRegister = isRegister,
                 });
                 if (req.TrySendFrame(stream.ToArray()))
-                    return ProtoBuf.Serializer.Deserialize<RegisterServiceResponse>(new System.IO.MemoryStream(req.ReceiveFrameBytes()));
+                    return ProtoBuf.Serializer.Deserialize<ResRegisterService>(new System.IO.MemoryStream(req.ReceiveFrameBytes()));
             }
             return null;
         }
