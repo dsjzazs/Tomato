@@ -51,7 +51,7 @@ namespace Tomato
         /// 在这里,我们将已注册的protocolID发送到路由端 Tomato.RouteService
         /// </summary>
         /// <returns></returns>
-        private RegisterServiceResponse Initialize(bool isRegister = true)
+        private RegisterServiceResponse _InitializeService(bool isRegister = true)
         {
             Logger.Debug($"{this.ServiceName} 正在向路由注册模块...");
             NetMQ.Sockets.RequestSocket req = new NetMQ.Sockets.RequestSocket();
@@ -81,7 +81,7 @@ namespace Tomato
 
             Logger.Debug($"{this.ServiceName} 启用线程数量:{Consumer}");
             //向路由注册服务
-            var initial_res = Initialize();
+            var initial_res = _InitializeService();
             if (initial_res?.Success == true)
             {
                 Logger.Info($"{this.ServiceName} 服务模块注册成功");
@@ -113,7 +113,7 @@ namespace Tomato
         /// <returns></returns>
         public bool StopService()
         {
-            Initialize(false);
+            _InitializeService(false);
 
             //for (int i = 0; i < _sockList.Count; i++)
             //    _sockList[i].Dispose();

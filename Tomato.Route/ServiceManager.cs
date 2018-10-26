@@ -112,8 +112,8 @@ namespace Tomato.Route
             var res = ProtoBuf.Serializer.Deserialize<RegisterServiceRequest>(new System.IO.MemoryStream(e.Socket.ReceiveFrameBytes()));
             if (res.IsRegister)
             {
-                if (_checkProtocol(res.ProtocolList))
-                    ServiceManager.Uninstall(res.ProtocolList);
+              //  if (_checkProtocol(res.ProtocolList)==false)
+                ServiceManager.Uninstall(res.ProtocolList);
 
                 var service = new ServiceModelInfo();
                 service.Dealer = new NetMQ.Sockets.DealerSocket();
