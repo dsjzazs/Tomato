@@ -32,8 +32,12 @@ namespace Tomato.Client
             using (var ms = new System.IO.MemoryStream(HeaderBytes))
                 header2 = ProtoBuf.Serializer.Deserialize<Header>(ms);
             header2.MessageType = messageType;
+            R body;
             using (var ms = new System.IO.MemoryStream(BodyBytes))
-                return ProtoBuf.Serializer.Deserialize<R>(ms);
+                body = ProtoBuf.Serializer.Deserialize<R>(ms);
+            if (body.MessageType != messageType)
+                throw new ArgumentException($"{messageType.ToString()} 无法转为对象{typeof(R)}");
+            return body;
         }
         /// <summary>
         /// 序列化为NetMQMessage对象
