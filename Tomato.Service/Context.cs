@@ -21,7 +21,7 @@ namespace Tomato.Net
                 DbContext = dbContext
             };
         }
-        public  TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
         public Model.EntityModel DbContext { get; private set; }
         public Header Header { get; private set; }
         public Model.IUser User { get; private set; }
@@ -54,7 +54,7 @@ namespace Tomato.Net
             NetMQ.NetMQMessage mqms = new NetMQMessage();
             header.SendTime = DateTime.Now;
             //数据包类型
-            mqms.Append(new NetMQFrame(BitConverter.GetBytes((UInt32)body.MessageType)));
+            mqms.Append((int)body.MessageType);
             using (var ms = new System.IO.MemoryStream())
             {
                 ProtoBuf.Serializer.Serialize(ms, header);//数据包头
@@ -62,11 +62,18 @@ namespace Tomato.Net
             }
             using (var ms2 = new System.IO.MemoryStream())
             {
+#if DEBUG
+                Console.WriteLine("Header:");
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(header));
+                Console.WriteLine("Body:");
+                Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(body));
+                Console.WriteLine("------------------------------------------");
+#endif
                 ProtoBuf.Serializer.Serialize(ms2, body);//对象
                 mqms.Append(ms2.ToArray());
             }
             //结束帧
-            mqms.Append(NetMQFrame.Empty);
+            mqms.AppendEmptyFrame();
             return _answer = Socket.TrySendMultipartMessage(Timeout, mqms);
         }
     }

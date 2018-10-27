@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NetMQ;
 using Tomato.Net;
-using Tomato.Protocol.Request;
-using Tomato.Protocol.Response;
+using Tomato.Protocol;
 
 namespace Tomato.Client
 {

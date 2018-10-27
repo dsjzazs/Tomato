@@ -4,11 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Net;
-using Tomato.Net.Protocol;
+using Tomato.Protocol;
 
 namespace Tomato.Route
 {
+    public static class ServerAddress
+    {
+        /// <summary>
+        /// 工作者连接地址
+        /// </summary>
+        public const string WorkerAddress = @"tcp://192.168.8.251:7777";
+
+        //客户端请求地址
+        public const string RouterAddress = @"tcp://192.168.8.251:6666";
+        public const string RegisterServiceAddress = @"tcp://192.168.8.251:7026";
+        public const string IP = @"tcp://192.168.8.251";
+    }
     public class ServiceModelInfo
     {
         public string ServiceName { get; set; }
@@ -108,12 +119,12 @@ namespace Tomato.Route
         /// <param name="e"></param>
         private static void RegisterService_REP_ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
-            Tomato.Net.Protocol.RegisterServiceResponse response;
-            var res = ProtoBuf.Serializer.Deserialize<RegisterServiceRequest>(new System.IO.MemoryStream(e.Socket.ReceiveFrameBytes()));
+            ResRegisterService response;
+            var res = ProtoBuf.Serializer.Deserialize<ReqRegisterService>(new System.IO.MemoryStream(e.Socket.ReceiveFrameBytes()));
             if (res.IsRegister)
             {
-                if (_checkProtocol(res.ProtocolList))
-                    ServiceManager.Uninstall(res.ProtocolList);
+              //  if (_checkProtocol(res.ProtocolList)==false)
+                ServiceManager.Uninstall(res.ProtocolList);
 
                 var service = new ServiceModelInfo();
                 service.Dealer = new NetMQ.Sockets.DealerSocket();
@@ -122,13 +133,13 @@ namespace Tomato.Route
                 service.ServiceName = res.ServiceName;
                 service_list.Add(service);
                 Console.WriteLine($"Load Service:{res.ServiceName} Port:{port} ProtocolList:{_listToString(res.ProtocolList)}");
-                response = new RegisterServiceResponse() { Port = port, Success = true, Message = "服务模块加载成功" };
+                response = new ResRegisterService() { Port = port, Success = true, Message = "服务模块加载成功" };
             }
             else
             {
                 ServiceManager.Uninstall(res.ProtocolList);
                 Console.WriteLine($"Uninstall Service : {res.ServiceName}");
-                response = new RegisterServiceResponse() { Port = 0, Success = true, Message = "服务模块卸载成功" };
+                response = new ResRegisterService() { Port = 0, Success = true, Message = "服务模块卸载成功" };
             }
 
             using (var stream = new System.IO.MemoryStream())

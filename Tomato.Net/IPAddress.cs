@@ -11,11 +11,11 @@ namespace Tomato.Net
         /// <summary>
         /// 工作者连接地址
         /// </summary>
-        public const string WorkerAddress = @"tcp://localhost:7777";
+        public const string WorkerAddress = @"tcp://192.168.8.251:7777";
 
         //客户端请求地址
-        public const string RouterAddress = @"tcp://localhost:6666";
-        public const string RegisterServiceAddress = @"tcp://localhost:7026";
-        public const string IP = @"tcp://localhost";
+        public const string RouterAddress = @"tcp://192.168.8.251:6666";
+        public const string RegisterServiceAddress = @"tcp://192.168.8.251:7026";
+        public const string IP = @"tcp://192.168.8.251";
     }
 }

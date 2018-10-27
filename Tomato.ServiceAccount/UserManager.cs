@@ -8,25 +8,18 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using Tomato.Model;
-using Tomato.Protocol.Request;
-using Tomato.Protocol.Response;
+using Tomato.Protocol;
 
 namespace Tomato.ServiceAccount
 {
     public class UserManager : ServiceBase
     {
         public override string ServiceName => "用户管理模块";
-
-        public void Initialize()
+        public UserManager()
         {
             //注册委托
             MessageHandle.RegisterHandle<ReqUserLogin>(LoginRequestHandle);
             MessageHandle.RegisterHandle<ReqUserRegister>(RegisterRequestHandel);
-        }
-        public void Uninitialize()
-        {
-            MessageHandle.UnloadHandle<ReqUserLogin>();
-            MessageHandle.UnloadHandle<ReqUserRegister>();
         }
         private void RegisterRequestHandel(Context context, ReqUserRegister body)
         {
