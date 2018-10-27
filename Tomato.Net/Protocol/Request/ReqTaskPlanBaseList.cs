@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Entity
+namespace Tomato.Net.Protocol.Request
 {
-    public class Class1
+    /// <summary>
+    /// 获取基本
+    /// </summary>
+    public class ReqTaskPlanBaseList
     {
+
     }
 }

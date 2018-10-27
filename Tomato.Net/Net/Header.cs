@@ -19,16 +19,20 @@ namespace Tomato.Net
         /// </summary>
         [ProtoBuf.ProtoMember(2)]
         public DateTime SendTime { get; set; }
+
         /// <summary>
         /// 身份唯一ID
         /// </summary>
         [ProtoBuf.ProtoMember(3)]
+
         public Guid Session { get;  set; }
         /// <summary>
         /// 是否为响应包
         /// </summary>
         [ProtoBuf.ProtoMember(4)]
         public bool IsResponse { get; set; }
+
         public Tomato.Protocol.ProtoEnum MessageType { get; set; }
+
     }
 }
