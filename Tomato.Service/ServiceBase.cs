@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NetMQ;
 using Tomato.Net;
 using Tomato.Protocol;
+using Tomato.Service.Model;
 
 namespace Tomato
 {
@@ -132,13 +133,13 @@ namespace Tomato
         private void Service_ReceiveMessage(Header header, byte[] BodyBytes, NetMQSocket Socket)
         {
             //初始化Model,并在会话结束后dispose
-            using (var dbContext = new Tomato.Model.EntityModel())
+            using (var dbContext = new EntityModel())
             {
-                Model.Session session = null;
+                Session session = null;
                 if (header.Session != null)
                     session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime <= DateTime.Now);
 
-                Model.IUser user;
+                IUser user;
                 if (session == null)
                     //没有登陆的话,分配一个游客账户
                     user = dbContext.UserDB.FirstOrDefault(i => i.UserName == "Guest");

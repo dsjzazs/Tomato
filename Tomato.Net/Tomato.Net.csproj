@@ -85,9 +85,13 @@
     <Compile Include="Net\Header.cs" />
     <Compile Include="Net\IProtocol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocol\Request\ReqTaskPlanBaseList.cs" />
+    <Compile Include="Protocol\Enum\RoleEditTypeEnum.cs" />
+    <Compile Include="Protocol\Request\ReqAuthorityEdit.cs" />
+    <Compile Include="Protocol\Request\ReqDepartmentEdit.cs" />
+    <Compile Include="Protocol\Request\ReqPositionEdit.cs" />
+    <Compile Include="Protocol\Request\ReqRoleEdit.cs" />
     <Compile Include="Protocol\Request\ReqUserLogin.cs" />
-    <Compile Include="Protocol\ServiceProtocolList.cs" />
+    <Compile Include="Protocol\Response\ResCurrencyResult.cs" />
     <Compile Include="ProtoEnum.cs" />
     <Compile Include="Protocol\Response\ResUserLogin.cs" />
     <Compile Include="Protocol\Request\ReqUserRegister.cs" />

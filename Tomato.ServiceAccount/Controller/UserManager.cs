@@ -7,21 +7,21 @@ using Tomato.Net;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
-using Tomato.Model;
 using Tomato.Protocol;
+using Tomato.Service.Model;
 
-namespace Tomato.ServiceAccount
+namespace Tomato.ServiceAccount.Controller
 {
-    public class UserManager : ServiceBase
+    public class UserManager
     {
-        public override string ServiceName => "用户管理模块";
-        public UserManager()
-        {
-            //注册委托
-            MessageHandle.RegisterHandle<ReqUserLogin>(LoginRequestHandle);
-            MessageHandle.RegisterHandle<ReqUserRegister>(RegisterRequestHandel);
-        }
-        private void RegisterRequestHandel(Context context, ReqUserRegister body)
+        public static UserManager Instance { get; } = new UserManager();
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="body"></param>
+        public void ReqUserRegisterHandle(Context context, ReqUserRegister body)
         {
             var db = context.DbContext;
             var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName);
@@ -64,7 +64,12 @@ namespace Tomato.ServiceAccount
             }
         }
 
-        private void LoginRequestHandle(Context context, ReqUserLogin Body)
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="Body"></param>
+        public void ReqUserLoginHandle(Context context, ReqUserLogin Body)
         {
             var db = context.DbContext;
             var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWord);
@@ -96,5 +101,9 @@ namespace Tomato.ServiceAccount
                 });
             }
         }
+
+        //注册
+
+        //登录
     }
 }

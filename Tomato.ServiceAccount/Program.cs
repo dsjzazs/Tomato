@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Model;
 using Tomato.Net;
+using Tomato.Service.Model;
+using Tomato.ServiceAccount.Controller;
 
 namespace Tomato.ServiceAccount
 {
@@ -16,7 +17,7 @@ namespace Tomato.ServiceAccount
         static void Main(string[] args)
         {
             EntityModel.InitializeDb(false);
-            var service = new UserManager();
+            var service = new AccountManager();
             service.StartService(10);
             while (true)
             {

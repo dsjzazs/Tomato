@@ -5,13 +5,21 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
-namespace Tomato.Model
+namespace Tomato.Service.Model
 {
     public class EntityModel : DbContext
     {
         public EntityModel() : base("name=Model1") { }
         public virtual DbSet<UserInfo> UserDB { get; set; }
         public virtual DbSet<Session> SessionDB { get; set; }
+
+        public virtual DbSet<AuthorityEntity> AuthorityEntities { get; set; }
+        public virtual DbSet<DepartmentEntity> DepartmentEntities { get; set; }
+        public virtual DbSet<ModularEntity> ModularEntities { get; set; }
+        public virtual DbSet<PositionEntity> PositionEntities { get; set; }
+        public virtual DbSet<RoleEntity> RoleEntities { get; set; }
+        public virtual DbSet<UserGrantEntity> UserGrantEntities { get; set; }
+
         public static void InitializeDb(bool NewDB)
         {
             if (NewDB)

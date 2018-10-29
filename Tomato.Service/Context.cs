@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
+using Tomato.Service.Model;
+
 namespace Tomato.Net
 {
     /// <summary>
@@ -11,7 +13,7 @@ namespace Tomato.Net
     /// </summary>
     public class Context
     {
-        internal static Context CreateContext(Model.IUser user, Header header, Model.EntityModel dbContext, NetMQ.NetMQSocket socket)
+        internal static Context CreateContext(IUser user, Header header, EntityModel dbContext, NetMQ.NetMQSocket socket)
         {
             return new Context()
             {
@@ -22,9 +24,9 @@ namespace Tomato.Net
             };
         }
         public TimeSpan Timeout { get; set; } = TimeSpan.FromMilliseconds(1000);
-        public Model.EntityModel DbContext { get; private set; }
+        public EntityModel DbContext { get; private set; }
         public Header Header { get; private set; }
-        public Model.IUser User { get; private set; }
+        public IUser User { get; private set; }
         private NetMQ.NetMQSocket Socket;
         private bool _answer;
         public bool Response<T>(T body) where T : IProtocol

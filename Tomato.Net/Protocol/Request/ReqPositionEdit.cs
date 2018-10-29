@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Tomato.Net.Protocol.Request
 {
-    /// <summary>
-    /// 获取基本
-    /// </summary>
-    public class ReqTaskPlanBaseList
+    public class ReqPositionEdit
     {
-
+        
     }
 }

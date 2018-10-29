@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tomato.Model
+namespace Tomato.Service.Model
 {
     public interface IUser
     {
@@ -22,17 +22,26 @@ namespace Tomato.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
+
         [DisplayName("用户名")]
         public string UserName { get; set; }
+
         [DisplayName("昵称")]
         public string NickName { get; set; }
+
         [DisplayName("密码")]
         public string Password { get; set; }
+
         [DisplayName("邮箱")]
         public string Email { get; set; }
+
         [DisplayName("性别")]
         public GenderEnum Gender { get; set; }
+
         public bool Verified { get; set; }
+
+        [DisplayName("授权表")]
+        public UserGrantEntity UserGrant { get; set; }
     }
 
 }
