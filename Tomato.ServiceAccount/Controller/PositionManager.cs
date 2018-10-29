@@ -9,9 +9,11 @@ using Tomato.Net.Protocol.Response;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class PositionManager
+    public class PositionManager : IModular
     {
         public static PositionManager Instance { get; } = new PositionManager();
+
+        public ModularEnum Modular => ModularEnum.职位编辑;
 
         /// <summary>
         /// 职位创建
@@ -21,21 +23,29 @@ namespace Tomato.ServiceAccount.Controller
         public void ReqpositionEdit(Context context, ReqPositionEdit body)
         {
             //检测权限
-
             var db = context.DbContext;
             var position = db.PositionEntities.FirstOrDefault(i => i.Name == body.Name);
 
             if (position == null)
             {
-                
+                //创建一个新的职位
+                position = new Service.Model.PositionEntity
+                {
+                    Name = body.Name,
+
+                    Department = body.DepartmentName,
+                    Describe = body.Describe,
+                    SuperiorName = body.SuperiorName,
+                };
             }
             else
             {
-                
+                position.Describe = body.Describe;
+                position.Department = body.DepartmentName;
+                position.SuperiorName = body.SuperiorName;
             }
+            db.SaveChanges();
         }
 
-
-        //职位分配用户
     }
 }

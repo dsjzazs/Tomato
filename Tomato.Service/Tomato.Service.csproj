@@ -80,7 +80,6 @@
     <Compile Include="Model\AuthorityEntity.cs" />
     <Compile Include="Model\DepartmentEntity.cs" />
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\ModularEntity.cs" />
     <Compile Include="Model\PositionEntity.cs" />
     <Compile Include="Model\RoleEntity.cs" />
     <Compile Include="Model\Session.cs" />

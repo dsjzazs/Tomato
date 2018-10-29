@@ -15,10 +15,10 @@ namespace Tomato.Service.Model
         [Key]
         public int Id { get; set; }
 
-        /// <summary>
-        /// 模块
-        /// </summary>
-        public ModularEntity Modular { get; set; }
+        public int AuthorityId { get; set; }
 
+        public string Name { get; set; }
+
+        public string Describe { get; set; }
     }
 }

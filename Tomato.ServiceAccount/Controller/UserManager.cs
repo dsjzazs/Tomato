@@ -13,9 +13,11 @@ using Tomato.Service.Model;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class UserManager
+    public class UserManager :IModular
     {
         public static UserManager Instance { get; } = new UserManager();
+
+        public ModularEnum Modular => ModularEnum.用户操作;
 
         /// <summary>
         /// 注册
@@ -102,9 +104,5 @@ namespace Tomato.ServiceAccount.Controller
                 });
             }
         }
-
-        //注册
-
-        //登录
     }
 }

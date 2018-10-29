@@ -25,16 +25,12 @@ namespace Tomato.Service.Model
         /// <summary>
         /// 上级
         /// </summary>
-        public int SuperiorId { get; set; }
+        public string SuperiorName { get; set; }
 
         /// <summary>
         /// 所属部门
         /// </summary>
-        public DepartmentEntity Department { get; set; }
+        public string Department { get; set; }
 
-        /// <summary>
-        /// 权限集合
-        /// </summary>
-        public ICollection<AuthorityEntity> AuthorityList { get; set; }
     }
 }

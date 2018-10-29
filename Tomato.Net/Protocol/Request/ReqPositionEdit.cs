@@ -24,6 +24,11 @@ namespace Tomato.Net.Protocol.Request
         /// </summary>
         public string SuperiorName { get; set; }
 
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string DepartmentName { get; set; }
+
         public ProtoEnum MessageType => throw new NotImplementedException();
     }
 }

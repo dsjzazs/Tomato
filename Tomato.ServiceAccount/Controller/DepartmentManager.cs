@@ -10,9 +10,11 @@ using Tomato.Protocol;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class DepartmentManager
+    public class DepartmentManager : IModular
     {
         public static DepartmentManager Instance { get; } = new DepartmentManager();
+
+        public ModularEnum Modular => ModularEnum.部门编辑;
 
         /// <summary>
         /// 部门创建
