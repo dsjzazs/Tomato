@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
+using Tomato.Protocol;
 
-namespace Tomato.Protocol
+namespace Tomato.Net.Protocol.Request
 {
     [ProtoBuf.ProtoContract]
     public class ReqUserRegister : IProtocol

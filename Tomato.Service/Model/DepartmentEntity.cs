@@ -25,7 +25,7 @@ namespace Tomato.Service.Model
         /// <summary>
         /// 上级部门ID
         /// </summary>
-        public int SuperiorId { get; set; }
+        public string SuperiorName { get; set; }
 
         /// <summary>
         /// 公司名

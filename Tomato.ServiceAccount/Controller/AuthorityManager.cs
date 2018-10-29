@@ -8,10 +8,10 @@ using Tomato.Net.Protocol.Request;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class AuthorityManager 
+    public class AuthorityManager
     {
         //权限创建
 
-
+        //权限匹配
     }
 }

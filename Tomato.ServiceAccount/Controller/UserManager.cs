@@ -7,6 +7,7 @@ using Tomato.Net;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
+using Tomato.Net.Protocol.Request;
 using Tomato.Protocol;
 using Tomato.Service.Model;
 
