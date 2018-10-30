@@ -28,7 +28,7 @@ namespace Tomato.Net
         public Header Header { get; private set; }
         public IUser User { get; private set; }
         private NetMQ.NetMQSocket Socket;
-        private bool _answer;
+        internal bool _answer;
         public bool Response<T>(T body) where T : IProtocol
         {
             var header = new Header

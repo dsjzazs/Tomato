@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 using Tomato.Protocol;
+using Tomato.Protocol.Request;
 
 namespace Tomato.ServiceAccount
 {

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Net.Protocol.Enum;
+using Tomato.Protocol.Enum;
 using Tomato.Protocol;
+using Tomato.Net;
 
-namespace Tomato.Net.Protocol.Request
+namespace Tomato.Protocol.Request
 {
     /// <summary>
     /// 权限添加类型--如菜单,模块,功能,

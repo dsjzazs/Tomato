@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Net.Protocol.Enum;
+using Tomato.Protocol.Enum;
 
-namespace Tomato.Net.Protocol.Request
+namespace Tomato.Protocol.Request
 {
     /// <summary>
     /// 角色添加--如用户,部门,权限

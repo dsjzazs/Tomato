@@ -162,13 +162,23 @@ namespace Tomato
                 RequestEvent?.Invoke(this, eventArgs);
                 if (eventArgs.Cancel == true)//如果接收的请求被取消,则不委托执行
                     return;
+                try
+                {
+                    //交给注册的委托
+                    var handle = MessageHandle.GetHandle(context.Header.MessageType);
+                    if (handle != null)
+                        handle.Invoke(context, BodyBytes);//全程务必保持由当前线程同步执行
+                    else
+                        Logger.Warn($"未注册的委托 : {context.Header.MessageType}");
+                }
+                catch (Exception ex)
+                {
+                    if (context._answer == false)
+                    {
+                   //     context.Response(new Tomato.Net.Protocol)
+                    }
+                }
 
-                //交给注册的委托
-                var handle = MessageHandle.GetHandle(context.Header.MessageType);
-                if (handle != null)
-                    handle.Invoke(context, BodyBytes);//全程务必保持由当前线程同步执行
-                else
-                    Logger.Warn($"未注册的委托 : {context.Header.MessageType}");
 
                 dbContext.SaveChanges();
             }

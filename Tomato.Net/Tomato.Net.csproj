@@ -91,6 +91,7 @@
     <Compile Include="Protocol\Request\ReqPositionEdit.cs" />
     <Compile Include="Protocol\Request\ReqRoleEdit.cs" />
     <Compile Include="Protocol\Request\ReqUserLogin.cs" />
+    <Compile Include="Protocol\ResException.cs" />
     <Compile Include="Protocol\Response\ResCurrencyResult.cs" />
     <Compile Include="ProtoEnum.cs" />
     <Compile Include="Protocol\Response\ResUserLogin.cs" />

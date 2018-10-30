@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tomato.Net;
 using Tomato.Protocol;
 
-namespace Tomato.Net.Protocol.Response
+namespace Tomato.Protocol.Response
 {
 
     /// <summary>
