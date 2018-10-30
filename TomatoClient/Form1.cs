@@ -70,7 +70,7 @@ namespace Tomato.Client
                 SuperiorName = "总经办",
                 Name = "IT部"
             };
-            var res = await NetClient.Instance.Request<ResCurrencyResult>(req);
+            var res = await NetClient.Instance.Request<ResDepartment>(req);
             if (res.Success)
             {
                 Console.WriteLine(res.Message);

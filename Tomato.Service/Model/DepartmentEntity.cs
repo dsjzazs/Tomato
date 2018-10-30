@@ -35,7 +35,7 @@ namespace Tomato.Service.Model
         public string CompanyName { get; set; }
 
         /// <summary>
-        /// 部门职位
+        /// 部门职位集合
         /// </summary>
         public virtual ICollection<PositionEntity> PositionList { get; set; }
     }

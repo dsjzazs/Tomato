@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
+using Tomato.Net.Protocol;
 using Tomato.Net.Protocol.Request;
 using Tomato.Net.Protocol.Response;
 using Tomato.Protocol;
@@ -27,32 +28,44 @@ namespace Tomato.ServiceAccount.Controller
             //检测一下权限
             Console.WriteLine("添加成功");
             var db = context.DbContext;
-            var depart = db.DepartmentEntities.FirstOrDefault(i => i.Name == body.Name);
-            if (depart == null)
+            try
             {
-                depart = new Service.Model.DepartmentEntity
+                var depart = db.DepartmentEntities.FirstOrDefault(i => i.Name == body.Name);
+                if (depart == null)
                 {
-                    Name = body.Name,
-                    CompanyName = "一品科技",
-                    Describe = body.Describe,
-                    PositionList = new List<Service.Model.PositionEntity>(),
-                    SuperiorName = body.SuperiorName
-                };
-                db.DepartmentEntities.Add(depart);
+                    depart = new Service.Model.DepartmentEntity
+                    {
+                        Name = body.Name,
+                        CompanyName = "一品科技",
+                        Describe = body.Describe,
+                        PositionList = new List<Service.Model.PositionEntity>(),
+                        SuperiorName = body.SuperiorName
+                    };
+                    db.DepartmentEntities.Add(depart);
+                }
+                else
+                {
+                    depart.Name = body.Name;
+                    depart.SuperiorName = body.SuperiorName;
+                    depart.Describe = body.Describe;
+                }
+                db.SaveChanges();
+                context.Response(new ResDepartment()
+                {
+                    Success = true,
+                    GUID = depart.GUID.ToString(),
+                });
             }
-            else
+            catch (Exception e)
             {
-                depart.Name = body.Name;
-                depart.SuperiorName = body.SuperiorName;
-                depart.Describe = body.Describe;
+                context.Response(new ResException()
+                {
+                   
+                });
             }
-            db.SaveChanges();
+          
 
-            context.Response(new ResCurrencyResult()
-            {
-                Message = "添加/修改成功!",
-                Success = true,
-            });
+           
         }
 
     }

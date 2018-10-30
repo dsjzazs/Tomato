@@ -15,6 +15,6 @@ namespace Tomato.Net.Protocol.Response
         public string Message { get; set; }
         [ProtoBuf.ProtoMember(3)]
         public Guid Session { get; set; }
-        public ProtoEnum MessageType => ProtoEnum.RegisterResponse;
+        public ProtoEnum MessageType => ProtoEnum.ResUserRegister;
     }
 }

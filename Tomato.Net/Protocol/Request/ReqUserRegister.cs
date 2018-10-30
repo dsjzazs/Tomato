@@ -20,6 +20,6 @@ namespace Tomato.Net.Protocol.Request
         public string Email { get; set; }
         [ProtoBuf.ProtoMember(5)]
         public GenderEnum Gender { get; set; }
-        public ProtoEnum MessageType => ProtoEnum.RegisterRequest;
+        public ProtoEnum MessageType => ProtoEnum.ReqUserRegister;
     }
 }

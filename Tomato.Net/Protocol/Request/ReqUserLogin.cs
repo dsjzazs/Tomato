@@ -23,6 +23,6 @@ namespace Tomato.Net.Protocol.Request
         [ProtoBuf.ProtoMember(2)]
         public string PassWord { get; set; }
 
-        public ProtoEnum MessageType => ProtoEnum.LoginRequest;
+        public ProtoEnum MessageType => ProtoEnum.ReqUserLogin;
     }
 }

@@ -28,6 +28,6 @@ namespace Tomato.Net.Protocol.Response
         /// </summary>
         [ProtoBuf.ProtoMember(3)]
         public string Message { get; set; }
-        public ProtoEnum MessageType => ProtoEnum.LoginResponse;
+        public ProtoEnum MessageType => ProtoEnum.ResUserLogin;
     }
 }

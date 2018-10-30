@@ -9,12 +9,14 @@ namespace Tomato.Net.Protocol
     public enum ProtoEnum
     {
         Exception = 100,
-        ResCurrencyResult = 1000,
-        LoginRequest = 1001,
-        LoginResponse = 1002,
-        RegisterRequest = 1003,
-        RegisterResponse = 1004,
+        ReqUserLogin = 1001,
+        ResUserLogin = 1002,
+        ReqUserRegister = 1003,
+        ResUserRegister = 1004,
         ReqDepartmentEdit = 1005,
-        ReqRoleEdit = 1006,
+        ResDepartment = 1006,
+        ReqDepartmentList = 1007,
+        ReqRoleEdit = 1008,
+        ReqRoleList = 1009,
     }
 }
