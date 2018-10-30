@@ -15,7 +15,6 @@ namespace Tomato.Service.Model
 
         public virtual DbSet<AuthorityEntity> AuthorityEntities { get; set; }
         public virtual DbSet<DepartmentEntity> DepartmentEntities { get; set; }
-        public virtual DbSet<ModularEntity> ModularEntities { get; set; }
         public virtual DbSet<PositionEntity> PositionEntities { get; set; }
         public virtual DbSet<RoleEntity> RoleEntities { get; set; }
         public virtual DbSet<UserGrantEntity> UserGrantEntities { get; set; }

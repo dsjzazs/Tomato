@@ -77,16 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="IModular.cs" />
     <Compile Include="Model\AuthorityEntity.cs" />
     <Compile Include="Model\DepartmentEntity.cs" />
     <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\ModularEntity.cs" />
     <Compile Include="Model\PositionEntity.cs" />
     <Compile Include="Model\RoleEntity.cs" />
     <Compile Include="Model\Session.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="MessageHandle.cs" />
     <Compile Include="Model\UserGrantEntity.cs" />
+    <Compile Include="ModularEnum.cs" />
     <Compile Include="RegisterService.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="Program.cs" />

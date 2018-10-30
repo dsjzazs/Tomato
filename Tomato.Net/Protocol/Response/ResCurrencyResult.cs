@@ -14,6 +14,11 @@ namespace Tomato.Protocol.Response
     /// </summary>
     public class ResCurrencyResult : IProtocol
     {
-        public ProtoEnum MessageType => throw new NotImplementedException();
+        [ProtoBuf.ProtoMember(1)]
+        public bool Success { get; set; }
+        [ProtoBuf.ProtoMember(2)]
+        public string Message { get; set; }
+
+        public ProtoEnum MessageType => ProtoEnum.ResCurrencyResult;
     }
 }

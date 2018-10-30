@@ -16,6 +16,8 @@ namespace Tomato.Service.Model
         string Password { get; set; }
         GenderEnum Gender { get; set; }
         bool Verified { get; set; }
+
+        UserGrantEntity UserGrant { get; set; }
     }
     public class UserInfo : IUser
     {

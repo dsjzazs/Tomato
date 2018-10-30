@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.ServiceAccount.Controller
+namespace Tomato.Service
 {
-    class ModularManager
+    public interface IModular
     {
-        //模块创建
+        ModularEnum Modular { get; }
     }
 }
