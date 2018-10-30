@@ -32,7 +32,7 @@ namespace Tomato.Net
         [ProtoBuf.ProtoMember(4)]
         public bool IsResponse { get; set; }
 
-        public Tomato.Protocol.ProtoEnum MessageType { get; set; }
+        public Tomato.Net.Protocol.ProtoEnum MessageType { get; set; }
 
     }
 }

@@ -16,7 +16,7 @@ namespace Tomato.ServiceAccount
 
         static void Main(string[] args)
         {
-            EntityModel.InitializeDb(false);
+            EntityModel.InitializeDb(true );
             var service = new AccountManager();
             service.StartService(10);
             while (true)

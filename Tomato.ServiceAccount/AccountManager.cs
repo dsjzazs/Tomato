@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
-using Tomato.Protocol.Request;
+using Tomato.Net.Protocol.Request;
 using Tomato.Protocol;
 
 namespace Tomato.ServiceAccount
@@ -19,7 +19,7 @@ namespace Tomato.ServiceAccount
             MessageHandle.RegisterHandle<ReqUserLogin>(Controller.UserManager.Instance.ReqUserLoginHandle);
             MessageHandle.RegisterHandle<ReqUserRegister>(Controller.UserManager.Instance.ReqUserRegisterHandle);
 
-            MessageHandle.RegisterHandle<ReqDepartmentEdit>(Controller.DepartmentManager.Instance.ReqDepartmentEditHandle);
+      //      MessageHandle.RegisterHandle<ReqDepartmentEdit>(Controller.DepartmentManager.Instance.ReqDepartmentEditHandle);
         }
 
         

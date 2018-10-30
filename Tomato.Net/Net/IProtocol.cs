@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Protocol;
+using Tomato.Net.Protocol;
 
 namespace Tomato.Net
 {

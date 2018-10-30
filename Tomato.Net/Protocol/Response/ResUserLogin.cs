@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
 
-namespace Tomato.Protocol.Response
+namespace Tomato.Net.Protocol.Response
 {
     /// <summary>
     /// 登陆响应

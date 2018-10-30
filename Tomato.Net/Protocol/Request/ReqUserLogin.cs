@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Protocol.Request
+namespace Tomato.Net.Protocol.Request
 {
     /// <summary>
     /// 登陆请求

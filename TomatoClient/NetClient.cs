@@ -25,7 +25,7 @@ namespace Tomato.Client
         /// <returns></returns>
         private R Deserialize<R>(NetMQMessage msg) where R : IProtocol
         {
-            var messageType = (Tomato.Protocol.ProtoEnum)msg[0].ConvertToInt32();//对象类型
+            var messageType = (Tomato.Net.Protocol.ProtoEnum)msg[0].ConvertToInt32();//对象类型
             var HeaderBytes = msg[1].ToByteArray();//头bytes
             var BodyBytes = msg[2].ToByteArray();//对象bytes
             Header header2;
@@ -103,9 +103,14 @@ namespace Tomato.Client
                         NetMQMessage rep_msg = new NetMQMessage();
                         if (socket.TryReceiveMultipartMessage(Timeout, ref rep_msg))//接收msg
                         {
-                            var error = rep_msg[0].ConvertToInt32();
-                            if (error >= 800000 && error <= 899999)
-                                throw new RemoteServiceException($"错误代码 : {error}\r\n{rep_msg[1].ConvertToString(Encoding.UTF8)}");
+                            var msg_id = rep_msg[0].ConvertToInt32();
+                            if (msg_id >= 800000 && msg_id <= 899999)
+                                throw new RemoteServiceException($"错误代码 : {msg_id}\r\n{rep_msg[1].ConvertToString(Encoding.UTF8)}");
+                            else if (msg_id == (int)Tomato.Net.Protocol.ProtoEnum.Exception)
+                            {
+                                var exception = Deserialize<Tomato.Net.Protocol.ResException>(rep_msg);
+                                throw exception.GetException();//抛出服务器异常信息
+                            }
                             return Deserialize<R>(rep_msg);
                         }
                         else

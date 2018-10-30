@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Protocol.Response
+namespace Tomato.Net.Protocol.Response
 {
     [ProtoBuf.ProtoContract]
     public class ResUserRegister : Net.IProtocol

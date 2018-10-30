@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Protocol.Enum
+namespace Tomato.Net.Protocol.Enum
 {
     public enum RoleEditTypeEnum
     {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
 using Tomato.Net;
+using Tomato.Net.Protocol;
 using Tomato.Protocol;
 using Tomato.Service.Model;
 
@@ -174,9 +175,7 @@ namespace Tomato
                 catch (Exception ex)
                 {
                     if (context._answer == false)
-                    {
-                   //     context.Response(new Tomato.Net.Protocol)
-                    }
+                        context.Response(new ResException(ex));
                 }
 
 

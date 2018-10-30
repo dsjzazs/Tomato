@@ -7,15 +7,15 @@ using Tomato.Net;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
-using Tomato.Protocol.Request;
+using Tomato.Net.Protocol.Request;
 using Tomato.Protocol;
 using Tomato.Service;
 using Tomato.Service.Model;
-using Tomato.Protocol.Response;
+using Tomato.Net.Protocol.Response;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class UserManager :IModular
+    public class UserManager : IModular
     {
         public static UserManager Instance { get; } = new UserManager();
 
@@ -99,11 +99,17 @@ namespace Tomato.ServiceAccount.Controller
             }
             else
             {
+                //异常模式
+                throw new NotImplementedException("账号或密码错误");
+
+                /*
                 context.Response(new ResUserLogin()
                 {
                     Message = "账号或密码错误!",
                     Success = false,
                 });
+                
+             */
             }
         }
     }
