@@ -22,5 +22,12 @@ namespace Tomato.ServiceAccount
             MessageHandle.RegisterHandle<ReqDepartmentEdit>(Controller.DepartmentManager.Instance.ReqDepartmentEditHandle);
         }
 
+        
+
+        //员工管理 
+        //部门管理
+        //职位管理
+        //角色管理
+        //权限管理
     }
 }

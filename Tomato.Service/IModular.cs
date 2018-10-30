@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.ServiceAccount
+namespace Tomato.Service
 {
-    interface IModular
+    public interface IModular
     {
         ModularEnum Modular { get; }
     }
