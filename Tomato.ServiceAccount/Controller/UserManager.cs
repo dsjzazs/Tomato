@@ -73,11 +73,11 @@ namespace Tomato.ServiceAccount.Controller
         /// 登录
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="Body"></param>
-        public void ReqUserLoginHandle(Context context, ReqUserLogin Body)
+        /// <param name="body"></param>
+        public void ReqUserLoginHandle(Context context, ReqUserLogin body)
         {
             var db = context.DbContext;
-            var user = db.UserDB.FirstOrDefault(i => i.UserName == Body.UserName && i.Password == Body.PassWord);
+            var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName && i.Password == body.PassWord);
             if (user != null)
             {
                 var session = new Session()
@@ -112,5 +112,8 @@ namespace Tomato.ServiceAccount.Controller
              */
             }
         }
+
+       
+
     }
 }

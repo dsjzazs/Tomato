@@ -11,7 +11,8 @@ namespace Tomato.Service.Model
     public class UserGrantEntity
     {
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid GUID { get; set; }
 
         /// <summary>
         /// 角色列表

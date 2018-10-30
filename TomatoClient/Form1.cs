@@ -24,7 +24,7 @@ namespace Tomato.Client
 
         private void Form1_Load(object sender, EventArgs e)
         {
-  
+
         }
         private async void button1_Click(object sender, EventArgs e)
         {
@@ -60,6 +60,21 @@ namespace Tomato.Client
             else
                 label3.Text = (res.Message);
             button2.Enabled = true;
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            var req = new ReqDepartmentEdit
+            {
+                Describe = "测试部门",
+                SuperiorName = "总经办",
+                Name = "IT部"
+            };
+            var res = await NetClient.Instance.Request<ResCurrencyResult>(req);
+            if (res.Success)
+            {
+                Console.WriteLine(res.Message);
+            }
         }
     }
 }

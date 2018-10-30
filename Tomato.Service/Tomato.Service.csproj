@@ -87,6 +87,7 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="MessageHandle.cs" />
     <Compile Include="Model\UserGrantEntity.cs" />
+    <Compile Include="Model\UserHandleLogEntity.cs" />
     <Compile Include="ModularEnum.cs" />
     <Compile Include="RegisterService.cs" />
     <Compile Include="ServiceBase.cs" />
@@ -94,7 +95,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

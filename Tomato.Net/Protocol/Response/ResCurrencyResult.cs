@@ -12,6 +12,7 @@ namespace Tomato.Net.Protocol.Response
     /// <summary>
     /// 通用返回类型
     /// </summary>
+    [ProtoBuf.ProtoContract]
     public class ResCurrencyResult : IProtocol
     {
         [ProtoBuf.ProtoMember(1)]

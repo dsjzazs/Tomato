@@ -25,6 +25,7 @@ namespace Tomato.ServiceAccount.Controller
         public void ReqDepartmentEditHandle(Context context, ReqDepartmentEdit body)
         {
             //检测一下权限
+            Console.WriteLine("添加成功");
             var db = context.DbContext;
             var depart = db.DepartmentEntities.FirstOrDefault(i => i.Name == body.Name);
             if (depart == null)
@@ -54,9 +55,5 @@ namespace Tomato.ServiceAccount.Controller
             });
         }
 
-
-        //部门分配职位
-
-        //部门分配用户
     }
 }

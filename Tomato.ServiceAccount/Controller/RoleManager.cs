@@ -15,7 +15,12 @@ namespace Tomato.ServiceAccount.Controller
 
         public ModularEnum Modular => ModularEnum.角色编辑;
 
-        //角色创建
+
+        public void ReqRoleAddHandle(Context context)
+        {
+
+        }
+
 
         //角色分配用户
 

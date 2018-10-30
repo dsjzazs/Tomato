@@ -14,5 +14,7 @@ namespace Tomato.Net.Protocol
         LoginResponse = 1002,
         RegisterRequest = 1003,
         RegisterResponse = 1004,
+        ReqDepartmentEdit = 1005,
+        ReqRoleEdit = 1006,
     }
 }

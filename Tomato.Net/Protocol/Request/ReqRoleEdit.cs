@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tomato.Net.Protocol.Enum;
 
 namespace Tomato.Net.Protocol.Request
 {
     /// <summary>
-    /// 角色添加--如用户,部门,权限
+    /// 角色
     /// </summary>
     public class ReqRoleEdit
     {
-        public RoleEditTypeEnum RoleEditType { get; set; }
+        /// <summary>
+        /// 角色名称
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
-        /// 角色ID
+        /// 角色描述
         /// </summary>
-        public int RoleId { get; set; }
+        public string Describe { get; set; }
 
-        /// <summary>
-        /// 添加类型ID
-        /// </summary>
-        public int FromId { get; set; }
     }
 }
