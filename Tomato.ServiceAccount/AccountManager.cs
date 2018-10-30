@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
-using Tomato.Net.Protocol.Request;
-using Tomato.Protocol;
 using Tomato.Protocol.Request;
+using Tomato.Protocol;
 
 namespace Tomato.ServiceAccount
 {

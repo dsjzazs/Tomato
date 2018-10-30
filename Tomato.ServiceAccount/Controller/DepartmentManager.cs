@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tomato.Net;
-using Tomato.Net.Protocol.Request;
-using Tomato.Net.Protocol.Response;
+using Tomato.Protocol.Request;
+using Tomato.Protocol.Response;
 using Tomato.Protocol;
 using Tomato.Service;
 
