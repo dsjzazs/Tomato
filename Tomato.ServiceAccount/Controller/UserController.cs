@@ -28,7 +28,7 @@ namespace Tomato.ServiceAccount.Controller
         public void ReqUserRegisterHandle(Context context, ReqUserRegister body)
         {
             var db = context.DbContext;
-            var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName);
+            var user = db.UserEntities.FirstOrDefault(i => i.UserName == body.UserName);
             if (user == null)
             {
                 user = new UserEntity()
@@ -46,7 +46,7 @@ namespace Tomato.ServiceAccount.Controller
                     Verified = true,
                     VerifiedTime = DateTime.Now
                 };
-                db.UserDB.Add(user);
+                db.UserEntities.Add(user);
                 db.SaveChanges();
                 Console.WriteLine(user.GUID);
 
@@ -76,7 +76,7 @@ namespace Tomato.ServiceAccount.Controller
         public void ReqUserLoginHandle(Context context, ReqUserLogin body)
         {
             var db = context.DbContext;
-            var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName && i.Password == body.PassWord);
+            var user = db.UserEntities.FirstOrDefault(i => i.UserName == body.UserName && i.Password == body.PassWord);
             if (user != null)
             {
                 var session = new SessionEntity()
@@ -86,7 +86,7 @@ namespace Tomato.ServiceAccount.Controller
                     Verified = true,
                     VerifiedTime = DateTime.Now
                 };
-                db.SessionDB.Add(session);
+                db.SessionEntities.Add(session);
                 db.SaveChanges();
                 context.Response(new ResUserLogin()
                 {

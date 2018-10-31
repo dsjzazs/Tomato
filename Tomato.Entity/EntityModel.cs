@@ -11,8 +11,8 @@ namespace Tomato.Entity
     public class EntityModel : DbContext
     {
         public EntityModel() : base("name=Model1") { }
-        public virtual DbSet<UserEntity> UserDB { get; set; }
-        public virtual DbSet<SessionEntity> SessionDB { get; set; }
+        public virtual DbSet<UserEntity> UserEntities { get; set; }
+        public virtual DbSet<SessionEntity> SessionEntities { get; set; }
 
         public virtual DbSet<AuthorityEntity> AuthorityEntities { get; set; }
         public virtual DbSet<DepartmentEntity> DepartmentEntities { get; set; }
@@ -27,14 +27,14 @@ namespace Tomato.Entity
                 System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseAlways<EntityModel>());
                 using (var db = new EntityModel())
                 {
-                    db.UserDB.Add(new UserEntity()
+                    db.UserEntities.Add(new UserEntity()
                     {
                         UserName = "admin",
                         Password = "admin",
                         NickName = "管理员",
                         Email = "dsjzazs@live.cn"
                     });
-                    db.UserDB.Add(new UserEntity()
+                    db.UserEntities.Add(new UserEntity()
                     {
                         UserName = "Guest",
                         Password = "Guest",

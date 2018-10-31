@@ -109,6 +109,8 @@ namespace Tomato
                 Logger.Error($"{this.ServiceName} 路由注册服务失败!");
             return IsRunning;
         }
+
+
         /// <summary>
         /// 停止消息接收服务
         /// </summary>
@@ -139,12 +141,12 @@ namespace Tomato
             {
                 Entity.Model.SessionEntity session = null;
                 if (header.Session != null)
-                    session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime <= DateTime.Now);
+                    session = dbContext.SessionEntities.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime <= DateTime.Now);
 
                 IUser user;
                 if (session == null)
                     //没有登陆的话,分配一个游客账户
-                    user = dbContext.UserDB.FirstOrDefault(i => i.UserName == "Guest");
+                    user = dbContext.UserEntities.FirstOrDefault(i => i.UserName == "Guest");
                 else
                 {
                     //刷新session有效期
