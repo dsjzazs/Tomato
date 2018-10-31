@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity.Model
 {
     public interface IUser
     {
@@ -19,7 +20,7 @@ namespace Tomato.Service.Model
 
         UserGrantEntity UserGrant { get; set; }
     }
-    public class UserInfo : IUser
+    public class UserEntity : IUser
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -45,5 +46,4 @@ namespace Tomato.Service.Model
         [DisplayName("授权表")]
         public UserGrantEntity UserGrant { get; set; }
     }
-
 }

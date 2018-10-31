@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
+using Tomato.Entity;
+using Tomato.Entity.Model;
 using Tomato.Net;
 using Tomato.Net.Protocol;
 using Tomato.Protocol;
-using Tomato.Service.Model;
 
 namespace Tomato
 {
@@ -136,7 +137,7 @@ namespace Tomato
             //初始化Model,并在会话结束后dispose
             using (var dbContext = new EntityModel())
             {
-                Session session = null;
+                Entity.Model.SessionEntity session = null;
                 if (header.Session != null)
                     session = dbContext.SessionDB.FirstOrDefault(j => j.GUID == header.Session && j.ExpirationTime <= DateTime.Now);
 

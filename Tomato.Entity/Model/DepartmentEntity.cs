@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity.Model
 {
-    public class PositionEntity
+    public class DepartmentEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
 
         /// <summary>
-        /// 名称
+        /// 部门名称
         /// </summary>
         public string Name { get; set; }
 
@@ -25,14 +25,18 @@ namespace Tomato.Service.Model
         public string Describe { get; set; }
 
         /// <summary>
-        /// 上级
+        /// 上级部门ID
         /// </summary>
         public string SuperiorName { get; set; }
 
         /// <summary>
-        /// 所属部门
+        /// 公司名
         /// </summary>
-        public string Department { get; set; }
+        public string CompanyName { get; set; }
 
+        /// <summary>
+        /// 部门职位集合
+        /// </summary>
+        public virtual ICollection<PositionEntity> PositionList { get; set; }
     }
 }

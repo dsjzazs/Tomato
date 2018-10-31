@@ -6,20 +6,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity.Model
 {
-    public class RoleEntity
+    public class PositionEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
 
+        /// <summary>
+        /// 名称
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// 描述
+        /// </summary>
         public string Describe { get; set; }
 
-        public virtual ICollection<AuthorityEntity> AuthorityList { get; set; }
+        /// <summary>
+        /// 上级
+        /// </summary>
+        public string SuperiorName { get; set; }
 
-        public virtual ICollection<UserGrantEntity> UserGrantList { get; set; }
+        /// <summary>
+        /// 所属部门
+        /// </summary>
+        public string Department { get; set; }
+
     }
 }

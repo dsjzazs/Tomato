@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tomato.Entity.Model;
 using Tomato.Net;
 using Tomato.Net.Protocol;
 using Tomato.Net.Protocol.Request;
@@ -12,11 +13,10 @@ using Tomato.Service;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class DepartmentManager : IModular
+    public class DepartmentController 
     {
-        public static DepartmentManager Instance { get; } = new DepartmentManager();
+        public static DepartmentController Instance { get; } = new DepartmentController();
 
-        public ModularEnum Modular => ModularEnum.部门编辑;
 
         /// <summary>
         /// 部门创建
@@ -33,12 +33,12 @@ namespace Tomato.ServiceAccount.Controller
                 var depart = db.DepartmentEntities.FirstOrDefault(i => i.Name == body.Name);
                 if (depart == null)
                 {
-                    depart = new Service.Model.DepartmentEntity
+                    depart = new DepartmentEntity
                     {
                         Name = body.Name,
                         CompanyName = "一品科技",
                         Describe = body.Describe,
-                        PositionList = new List<Service.Model.PositionEntity>(),
+                        PositionList = new List<PositionEntity>(),
                         SuperiorName = body.SuperiorName
                     };
                     db.DepartmentEntities.Add(depart);

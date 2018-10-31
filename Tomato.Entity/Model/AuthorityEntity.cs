@@ -6,17 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity.Model
 {
-    public class UserGrantEntity
+    /// <summary>
+    /// 权限表
+    /// </summary>
+    public class AuthorityEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
 
-        /// <summary>
-        /// 角色列表
-        /// </summary>
-        public virtual ICollection<RoleEntity> RoleList { get; set; }
+        public int AuthorityId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Describe { get; set; }
     }
 }

@@ -7,19 +7,18 @@ using Tomato.Net;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
+using Tomato.Entity.Model;
 using Tomato.Net.Protocol.Request;
 using Tomato.Protocol;
 using Tomato.Service;
-using Tomato.Service.Model;
 using Tomato.Net.Protocol.Response;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class UserManager : IModular
+    public class UserController
     {
-        public static UserManager Instance { get; } = new UserManager();
+        public static UserController Instance { get; } = new UserController();
 
-        public ModularEnum Modular => ModularEnum.用户操作;
 
         /// <summary>
         /// 注册
@@ -32,7 +31,7 @@ namespace Tomato.ServiceAccount.Controller
             var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName);
             if (user == null)
             {
-                user = new UserInfo()
+                user = new UserEntity()
                 {
                     Email = body.Email,
                     Gender = body.Gender,
@@ -40,7 +39,7 @@ namespace Tomato.ServiceAccount.Controller
                     Password = body.Password,
                     UserName = body.UserName,
                 };
-                var session = new Session()
+                var session = new SessionEntity()
                 {
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
@@ -80,7 +79,7 @@ namespace Tomato.ServiceAccount.Controller
             var user = db.UserDB.FirstOrDefault(i => i.UserName == body.UserName && i.Password == body.PassWord);
             if (user != null)
             {
-                var session = new Session()
+                var session = new SessionEntity()
                 {
                     ExpirationTime = DateTime.Now.AddHours(1),
                     User = user,
@@ -113,7 +112,7 @@ namespace Tomato.ServiceAccount.Controller
             }
         }
 
-       
+
 
     }
 }

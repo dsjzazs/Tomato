@@ -70,6 +70,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tomato.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Tomato.Entity.dll</HintPath>
+    </Reference>
     <Reference Include="Tomato.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Tomato.Net.dll</HintPath>
@@ -77,18 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
-    <Compile Include="IModular.cs" />
-    <Compile Include="Model\AuthorityEntity.cs" />
-    <Compile Include="Model\DepartmentEntity.cs" />
-    <Compile Include="Model\Model.cs" />
-    <Compile Include="Model\PositionEntity.cs" />
-    <Compile Include="Model\RoleEntity.cs" />
-    <Compile Include="Model\Session.cs" />
-    <Compile Include="Model\User.cs" />
     <Compile Include="MessageHandle.cs" />
-    <Compile Include="Model\UserGrantEntity.cs" />
-    <Compile Include="Model\UserHandleLogEntity.cs" />
-    <Compile Include="ModularEnum.cs" />
     <Compile Include="RegisterService.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="Program.cs" />

@@ -17,16 +17,14 @@ namespace Tomato.ServiceAccount
         public AccountManager()
         {
             //用户管理
-            MessageHandle.RegisterHandle<ReqUserLogin>(Controller.UserManager.Instance.ReqUserLoginHandle);
-            MessageHandle.RegisterHandle<ReqUserRegister>(Controller.UserManager.Instance.ReqUserRegisterHandle);
+            MessageHandle.RegisterHandle<ReqUserLogin>(Controller.UserController.Instance.ReqUserLoginHandle);
+            MessageHandle.RegisterHandle<ReqUserRegister>(Controller.UserController.Instance.ReqUserRegisterHandle);
 
             //部门管理
-            MessageHandle.RegisterHandle<ReqDepartmentEdit>(Controller.DepartmentManager.Instance.ReqDepartmentEditHandle);
+            MessageHandle.RegisterHandle<ReqDepartmentEdit>(Controller.DepartmentController.Instance.ReqDepartmentEditHandle);
 
 
         }
-
-        
 
         //员工管理 
         //部门管理

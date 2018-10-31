@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Tomato.Entity.Model;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity
 {
     public class EntityModel : DbContext
     {
         public EntityModel() : base("name=Model1") { }
-        public virtual DbSet<UserInfo> UserDB { get; set; }
-        public virtual DbSet<Session> SessionDB { get; set; }
+        public virtual DbSet<UserEntity> UserDB { get; set; }
+        public virtual DbSet<SessionEntity> SessionDB { get; set; }
 
         public virtual DbSet<AuthorityEntity> AuthorityEntities { get; set; }
         public virtual DbSet<DepartmentEntity> DepartmentEntities { get; set; }
@@ -26,14 +27,14 @@ namespace Tomato.Service.Model
                 System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseAlways<EntityModel>());
                 using (var db = new EntityModel())
                 {
-                    db.UserDB.Add(new UserInfo()
+                    db.UserDB.Add(new UserEntity()
                     {
                         UserName = "admin",
                         Password = "admin",
                         NickName = "管理员",
                         Email = "dsjzazs@live.cn"
                     });
-                    db.UserDB.Add(new UserInfo()
+                    db.UserDB.Add(new UserEntity()
                     {
                         UserName = "Guest",
                         Password = "Guest",

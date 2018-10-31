@@ -9,10 +9,9 @@ using Tomato.Service;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class AuthorityManager : IModular
+    public class AuthorityController 
     {
-        public static AuthorityManager Instance { get; } = new AuthorityManager();
-        public ModularEnum Modular => ModularEnum.权限编辑;
+        public static AuthorityController Instance { get; } = new AuthorityController();
 
         /// <summary>
         /// 检测权限是否权限

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tomato.Entity.Model;
 using Tomato.Net;
 using Tomato.Net.Protocol.Request;
 using Tomato.Net.Protocol.Response;
@@ -10,11 +11,10 @@ using Tomato.Service;
 
 namespace Tomato.ServiceAccount.Controller
 {
-    public class PositionManager : IModular
+    public class PositionController 
     {
-        public static PositionManager Instance { get; } = new PositionManager();
+        public static PositionController Instance { get; } = new PositionController();
 
-        public ModularEnum Modular => ModularEnum.职位编辑;
 
         /// <summary>
         /// 职位创建
@@ -30,7 +30,7 @@ namespace Tomato.ServiceAccount.Controller
             if (position == null)
             {
                 //创建一个新的职位
-                position = new Service.Model.PositionEntity
+                position = new PositionEntity
                 {
                     Name = body.Name,
 

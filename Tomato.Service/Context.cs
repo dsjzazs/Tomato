@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetMQ;
-using Tomato.Service.Model;
+using Tomato.Entity;
+using Tomato.Entity.Model;
 
 namespace Tomato.Net
 {

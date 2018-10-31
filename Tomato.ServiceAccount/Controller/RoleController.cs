@@ -9,11 +9,10 @@ using Tomato.Service;
 namespace Tomato.ServiceAccount.Controller
 {
     //角色控制器
-    public class RoleManager : IModular
+    public class RoleController
     {
-        public static RoleManager Instance { get; } = new RoleManager();
+        public static RoleController Instance { get; } = new RoleController();
 
-        public ModularEnum Modular => ModularEnum.角色编辑;
 
 
         public void ReqRoleAddHandle(Context context)

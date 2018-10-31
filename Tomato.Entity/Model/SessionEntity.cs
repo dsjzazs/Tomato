@@ -6,37 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tomato.Service.Model
+namespace Tomato.Entity.Model
 {
-    public class DepartmentEntity
+   public class SessionEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid GUID { get; set; }
-
         /// <summary>
-        /// 部门名称
+        /// 验证登录
         /// </summary>
-        public string Name { get; set; }
-
+        public bool Verified { get; set; }
         /// <summary>
-        /// 描述
+        /// 验证时间
         /// </summary>
-        public string Describe { get; set; }
-
+        public DateTime? VerifiedTime { get; set; }
         /// <summary>
-        /// 上级部门ID
+        /// 过期时间
         /// </summary>
-        public string SuperiorName { get; set; }
-
+        public DateTime? ExpirationTime { get; set; }
         /// <summary>
-        /// 公司名
+        /// 用户信息
         /// </summary>
-        public string CompanyName { get; set; }
-
-        /// <summary>
-        /// 部门职位集合
-        /// </summary>
-        public virtual ICollection<PositionEntity> PositionList { get; set; }
+        public virtual UserEntity User { get; set; }
     }
 }
